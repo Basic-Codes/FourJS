@@ -1556,8 +1556,16 @@ const testLine = [
     },
 ];
 
+const images = [
+    "https://cdn1.epicgames.com/min/offer/2560x1440-2560x1440-5e710b93049cbd2125cf0261dcfbf943.jpg",
+    "https://cdn1.epicgames.com/offer/22600f09e936468c8ecfc22b5eac7d7c/EGST_StoreLandscape_2560x1440_2560x1440-d49d4862a0e1a243638d5f95517ed205",
+    "https://bloody-disgusting.com/wp-content/uploads/2018/12/hades-preview-header.png",
+    "https://staticctf.ubisoft.com/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/2vdIrNkwP2H2Ot8rlRDkxa/569d8c6770743ee56d3c966862d96d40/Combat-Forest-Warriors-_Autumnal-forest_1920x1080.jpg",
+];
+
 const Canvas2DOn3js = () => {
     const [context, setContext] = useState(null);
+    const [textureImageIndex, setTextureImageIndex] = useState(0);
     const canvasRef = useRef(null);
 
     function drawStroke() {
@@ -1597,8 +1605,15 @@ const Canvas2DOn3js = () => {
     }, [context, canvasRef]);
 
     useEffect(() => {
-        const texture = new THREE.Texture(canvasRef?.current);
-        texture.needsUpdate = true;
+        // ! Make texture from 2D Canvas
+        // const texture = new THREE.Texture(canvasRef?.current);
+        // texture.needsUpdate = true;
+
+        // ! Make texture from image
+        const loader = new THREE.TextureLoader();
+        const texture = loader.load(images[textureImageIndex], () => {
+            renderer.render(scene, camera);
+        });
 
         const scene = new THREE.Scene();
 
@@ -1644,12 +1659,22 @@ const Canvas2DOn3js = () => {
             window.requestAnimationFrame(animate);
         };
         animate();
-    }, []);
+    }, [textureImageIndex]);
 
     return (
         <div>
             <canvas id="main_canvas" />
             <canvas ref={canvasRef}></canvas>
+            <button
+                onClick={() =>
+                    setTextureImageIndex(
+                        (textureImageIndex) =>
+                            (textureImageIndex + 1) % images?.length
+                    )
+                }
+            >
+                Next
+            </button>
         </div>
     );
 };
