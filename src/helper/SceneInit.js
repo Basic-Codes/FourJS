@@ -25,7 +25,7 @@ export default class SceneInit {
         this.directionalLight = undefined;
     }
 
-    initialize() {
+    initialize(cameraPos) {
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(
             this.fov,
@@ -33,7 +33,8 @@ export default class SceneInit {
             1,
             1000
         );
-        this.camera.position.z = 100;
+        // this.camera.position.z = cameraZPos;
+        this.camera.position.set(cameraPos.x, cameraPos.y, cameraPos.z);
 
         // NOTE: Specify a canvas which is already created in the HTML.
         const canvas = document.getElementById(this.canvasId);
@@ -61,8 +62,8 @@ export default class SceneInit {
 
         // directional light - parallel sun rays
         this.directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        // this.directionalLight.castShadow = true;
         this.directionalLight.position.set(0, 32, 64);
+        this.directionalLight.castShadow = true;
         this.scene.add(this.directionalLight);
 
         // if window resizes

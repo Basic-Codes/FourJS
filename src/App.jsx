@@ -1,9 +1,10 @@
 import { useState } from "react";
-import MyBaseScene from "./components/MyBaseScene";
-import TutBaseScene from "./components/TutBaseScene";
-import WebXRTest from "./components/WebXRTest";
-import CanvasDraw from "./components/CanvasDraw";
-import Canvas2DOn3js from "./components/Canvas2DOn3js";
+import MyBaseScene from "./components/TestComponents/MyBaseScene";
+import TutBaseScene from "./components/TestComponents/TutBaseScene";
+import WebXRTest from "./components/TestComponents/WebXRTest";
+import CanvasDraw from "./components/TestComponents/CanvasDraw";
+import Canvas2DOn3js from "./components/TestComponents/Canvas2DOn3js";
+import Classroom from "./components/Classroom/Classroom";
 
 function App() {
     return (
@@ -16,7 +17,9 @@ function App() {
 
             {/* <CanvasDraw /> */}
 
-            <Canvas2DOn3js />
+            {/* <Canvas2DOn3js /> */}
+
+            <Classroom />
         </div>
     );
 }
