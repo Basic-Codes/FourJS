@@ -30,8 +30,8 @@ export default class SceneInit {
         this.camera = new THREE.PerspectiveCamera(
             this.fov,
             window.innerWidth / window.innerHeight,
-            1,
-            1000
+            0.1,
+            10
         );
         // this.camera.position.z = cameraZPos;
         this.camera.position.set(cameraPos.x, cameraPos.y, cameraPos.z);
@@ -44,7 +44,10 @@ export default class SceneInit {
             antialias: true,
         });
         this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.xr.enabled = true;
         // this.renderer.shadowMap.enabled = true;
+        this.scene.background = new THREE.Color("#ffa7e9");
         document.body.appendChild(this.renderer.domElement);
 
         this.clock = new THREE.Clock();
@@ -85,9 +88,13 @@ export default class SceneInit {
         // NOTE: Window is implied.
         // requestAnimationFrame(this.animate.bind(this));
         window.requestAnimationFrame(this.animate.bind(this));
-        this.render();
-        this.stats.update();
-        this.controls.update();
+        // this.render();
+        // this.stats.update();
+        // this.controls.update();
+
+        this.renderer.setAnimationLoop(() => {
+            this.renderer.render(this.scene, this.camera);
+        });
     }
 
     render() {
