@@ -47,6 +47,7 @@ export default class SceneInit {
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.xr.enabled = true;
         this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFShadowMap;
         this.scene.background = new THREE.Color("#ffa7e9");
         document.body.appendChild(this.renderer.domElement);
 
@@ -60,7 +61,6 @@ export default class SceneInit {
 
         // ambient light which is for the whole scene
         this.ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-        this.ambientLight.castShadow = true;
         this.scene.add(this.ambientLight);
 
         // directional light - parallel sun rays

@@ -48,8 +48,9 @@ function Classroom() {
         mainScene.scene.add(mesh);
     };
     const addSpotLight = (mainScene) => {
-        var spotLight = new THREE.SpotLight(0xffffff);
+        var spotLight = new THREE.SpotLight("#208a12", 100);
         spotLight.position.set(0, 5, 5);
+        mainScene.scene.add(spotLight);
         var spotLightHelper = new THREE.SpotLightHelper(spotLight);
         mainScene.scene.add(spotLightHelper);
     };
@@ -105,6 +106,17 @@ function Classroom() {
         });
 
         addSpotLight(mainScene);
+
+        // ? Shadow Not working
+        // var DL = new THREE.PointLight("#FFFFFF", 10, 600);
+        // DL.position.set(2, 2, 2);
+        // DL.castShadow = true;
+        // const d = 100;
+        // DL.shadow.camera.left = -d;
+        // DL.shadow.camera.right = d;
+        // DL.shadow.camera.top = d;
+        // DL.shadow.camera.bottom = -d;
+        // mainScene.scene.add(DL);
 
         // ! VR Stuffs
         document.body.appendChild(VRButton.createButton(mainScene.renderer));
