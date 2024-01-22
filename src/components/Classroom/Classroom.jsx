@@ -1,23 +1,48 @@
 import { useEffect } from "react";
 import * as THREE from "three";
+import { Vector3 } from "three";
 import SceneInit from "../../helper/SceneInit";
 import { VRButton } from "three/addons/webxr/VRButton.js";
 import { XRControllerModelFactory } from "three/addons/webxr/XRControllerModelFactory.js";
 import { XRHandModelFactory } from "three/addons/webxr/XRHandModelFactory.js";
+import { useState } from "react";
+
+const chairsData = [
+    {
+        position: new Vector3(-2, 0, 0),
+    },
+    {
+        position: new Vector3(0, 0, 0),
+    },
+    {
+        position: new Vector3(2, 0, 0),
+    },
+    {
+        position: new Vector3(-2, 0, 2),
+    },
+    {
+        position: new Vector3(0, 0, 2),
+    },
+    {
+        position: new Vector3(2, 0, 2),
+    },
+];
 
 function Classroom() {
+    const [chairs, setChairs] = useState([chairsData]);
+
     const addFloor = (mainScene) => {
-        const boxGeometry = new THREE.BoxGeometry(10, 0.1, 10);
-        const boxMaterial = new THREE.MeshPhongMaterial({ color: "#5edb9b" });
-        const mesh = new THREE.Mesh(boxGeometry, boxMaterial);
+        const geometry = new THREE.BoxGeometry(10, 0.1, 10);
+        const material = new THREE.MeshPhongMaterial({ color: "#5edb9b" });
+        const mesh = new THREE.Mesh(geometry, material);
         mesh.castShadow = true;
         mesh.position.set(0, -0.5, 0);
         mainScene.scene.add(mesh);
     };
     const addCube = (mainScene) => {
-        const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-        const boxMaterial = new THREE.MeshPhongMaterial({ color: "#f18170" });
-        const mesh = new THREE.Mesh(boxGeometry, boxMaterial);
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const material = new THREE.MeshPhongMaterial({ color: "#f18170" });
+        const mesh = new THREE.Mesh(geometry, material);
         mesh.position.set(0, 0, 0);
         mesh.receiveShadow = true;
         mainScene.scene.add(mesh);
@@ -28,26 +53,58 @@ function Classroom() {
         var spotLightHelper = new THREE.SpotLightHelper(spotLight);
         mainScene.scene.add(spotLightHelper);
     };
-    const addVRFloor = (mainScene) => {
-        const floorGeometry = new THREE.PlaneGeometry(4, 4);
-        const floorMaterial = new THREE.MeshStandardMaterial({
-            color: 0x666666,
-        });
-        const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-        floor.rotation.x = -Math.PI / 2;
-        floor.receiveShadow = true;
-        mainScene.scene.add(floor);
+    const addTable = (mainScene, position = new Vector3(0, 0, 0)) => {
+        const top = new THREE.Mesh(
+            new THREE.BoxGeometry(1, 0.05, 0.7),
+            new THREE.MeshPhongMaterial({ color: "#d39b55" })
+        );
+        top.position.set(0, 0, 0);
+
+        const leg1 = new THREE.Mesh(
+            new THREE.BoxGeometry(0.05, 0.5, 0.05),
+            new THREE.MeshPhongMaterial({ color: "#f1b770" })
+        );
+        leg1.position.set(-0.4, -0.25, -0.3);
+        const leg2 = new THREE.Mesh(
+            new THREE.BoxGeometry(0.05, 0.5, 0.05),
+            new THREE.MeshPhongMaterial({ color: "#f1b770" })
+        );
+        leg2.position.set(0.4, -0.25, -0.3);
+        const leg3 = new THREE.Mesh(
+            new THREE.BoxGeometry(0.05, 0.5, 0.05),
+            new THREE.MeshPhongMaterial({ color: "#f1b770" })
+        );
+        leg3.position.set(0.4, -0.25, 0.3);
+        const leg4 = new THREE.Mesh(
+            new THREE.BoxGeometry(0.05, 0.5, 0.05),
+            new THREE.MeshPhongMaterial({ color: "#f1b770" })
+        );
+        leg4.position.set(-0.4, -0.25, 0.3);
+
+        const group = new THREE.Group();
+        group.add(top);
+        group.add(leg1);
+        group.add(leg2);
+        group.add(leg3);
+        group.add(leg4);
+        group.position.set(position.x, position.y, position.z);
+
+        mainScene.scene.add(group);
     };
 
     useEffect(() => {
         const mainScene = new SceneInit("myThreeJsCanvas");
-        mainScene.initialize({ x: 0, y: 1.6, z: 3 });
+        mainScene.initialize({ x: 7, y: 5, z: 7 });
         mainScene.animate();
 
         addFloor(mainScene);
-        addCube(mainScene);
+        // addCube(mainScene);
+
+        chairsData?.map((item) => {
+            addTable(mainScene, item.position);
+        });
+
         addSpotLight(mainScene);
-        // addVRFloor(mainScene);
 
         // ! VR Stuffs
         document.body.appendChild(VRButton.createButton(mainScene.renderer));

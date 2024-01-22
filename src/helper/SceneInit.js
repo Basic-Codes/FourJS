@@ -10,7 +10,7 @@ export default class SceneInit {
         this.renderer = undefined;
 
         // NOTE: Camera params;
-        this.fov = 45;
+        this.fov = 50;
         this.nearPlane = 1;
         this.farPlane = 1000;
         this.canvasId = canvasId;
@@ -31,7 +31,7 @@ export default class SceneInit {
             this.fov,
             window.innerWidth / window.innerHeight,
             0.1,
-            10
+            10000
         );
         // this.camera.position.z = cameraZPos;
         this.camera.position.set(cameraPos.x, cameraPos.y, cameraPos.z);
@@ -46,7 +46,7 @@ export default class SceneInit {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.xr.enabled = true;
-        // this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.enabled = true;
         this.scene.background = new THREE.Color("#ffa7e9");
         document.body.appendChild(this.renderer.domElement);
 
