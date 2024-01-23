@@ -95,8 +95,14 @@ function Classroom() {
 
     useEffect(() => {
         const mainScene = new SceneInit("myThreeJsCanvas");
-        mainScene.initialize({ x: 7, y: 5, z: 7 });
+        mainScene.initialize({ x: 5, y: 5, z: 5 });
         mainScene.animate();
+
+        // mainScene.renderer.xr.addEventListener("sessionstart", (session) => {
+        //     session.target.getCamera().cameras[0].position.x = 100;
+        //     session.target.getCamera().cameras[0].position.y = 5;
+        //     session.target.getCamera().cameras[0].position.z = 7;
+        // });
 
         addFloor(mainScene);
         // addCube(mainScene);
