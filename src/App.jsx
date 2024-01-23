@@ -20,9 +20,9 @@ function App() {
 
             {/* <Canvas2DOn3js /> */}
 
-            {/* <Classroom /> */}
+            {/* <FirebaseTesting /> */}
 
-            <FirebaseTesting />
+            <Classroom />
         </div>
     );
 }

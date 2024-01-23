@@ -7,6 +7,8 @@ import { VRButton } from "three/addons/webxr/VRButton.js";
 import { XRControllerModelFactory } from "three/addons/webxr/XRControllerModelFactory.js";
 import { XRHandModelFactory } from "three/addons/webxr/XRHandModelFactory.js";
 import { useState } from "react";
+import { ref, onValue } from "firebase/database";
+import { db } from "../../helper/firebase";
 
 const chairsData = [
     // Front Seats
@@ -61,6 +63,7 @@ const chairsData = [
 
 function Classroom() {
     const [chairs, setChairs] = useState(chairsData);
+    const [totalStudents, setTotalStudents] = useState(1);
 
     const makeRoom = (mainScene) => {
         const roomGroup = new THREE.Group();
@@ -216,14 +219,28 @@ function Classroom() {
         makeRoom(mainScene);
         addBoard(mainScene);
 
-        chairs?.map((item) => {
-            addTable(mainScene, item.position);
+        // chairs?.map((item) => {
+        //     addTable(mainScene, item.position);
+        // });
+        [...Array(totalStudents).keys()]?.map((i) => {
+            addTable(mainScene, chairs[i].position);
         });
 
         // addSpotLight(mainScene);
 
         // ! VR Stuffs
         document.body.appendChild(VRButton.createButton(mainScene.renderer));
+    }, [totalStudents]);
+
+    useEffect(() => {
+        onValue(
+            ref(db, "vr-classroom/session/my-code/total-students"),
+            async (snapshot) => {
+                const data = snapshot.val();
+                console.log(data);
+                setTotalStudents(data);
+            }
+        );
     }, []);
 
     return (
