@@ -5,6 +5,7 @@ import WebXRTest from "./components/TestComponents/WebXRTest";
 import CanvasDraw from "./components/TestComponents/CanvasDraw";
 import Canvas2DOn3js from "./components/TestComponents/Canvas2DOn3js";
 import Classroom from "./components/Classroom/Classroom";
+import FirebaseTesting from "./components/TestComponents/FirebaseTesting";
 
 function App() {
     return (
@@ -19,7 +20,9 @@ function App() {
 
             {/* <Canvas2DOn3js /> */}
 
-            <Classroom />
+            {/* <Classroom /> */}
+
+            <FirebaseTesting />
         </div>
     );
 }
