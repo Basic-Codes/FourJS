@@ -26,6 +26,8 @@ export default class SceneInit {
     }
 
     initialize(cameraPos) {
+        this.cgroup = new THREE.Group();
+
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(
             this.fov,
@@ -33,8 +35,13 @@ export default class SceneInit {
             0.1,
             10000
         );
+
+        this.cgroup.add(this.camera);
+        this.scene.add(this.cgroup);
+
         // this.camera.position.z = cameraZPos;
-        this.camera.position.set(cameraPos.x, cameraPos.y, cameraPos.z);
+        // this.camera.position.set(cameraPos.x, cameraPos.y, cameraPos.z);
+        this.cgroup.position.set(cameraPos.x, cameraPos.y, cameraPos.z);
 
         // NOTE: Specify a canvas which is already created in the HTML.
         const canvas = document.getElementById(this.canvasId);
@@ -46,6 +53,12 @@ export default class SceneInit {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.xr.enabled = true;
+        this.renderer.xr.setReferenceSpaceType("local");
+        // this.renderer.xr.addEventListener("sessionstart", () => {
+        //     this.renderer.xr.getCamera().cameras[0].position.x = 1000;
+        //     this.renderer.xr.getCamera().cameras[0].position.y = 1000;
+        //     this.renderer.xr.getCamera().cameras[0].position.z = 1000;
+        // });
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.PCFShadowMap;
         this.scene.background = new THREE.Color("#ffa7e9");
@@ -85,6 +98,7 @@ export default class SceneInit {
     }
 
     animate() {
+        let ci = 0;
         // NOTE: Window is implied.
         // requestAnimationFrame(this.animate.bind(this));
         window.requestAnimationFrame(this.animate.bind(this));
@@ -92,15 +106,37 @@ export default class SceneInit {
         // this.stats.update();
         // this.controls.update();
 
-        this.renderer.setAnimationLoop(() => {
+        this.renderer.setAnimationLoop((data) => {
+            // const frame = this.renderer.xr.getFrame();
+
+            // if (!frame) {
+            //     this.renderer.render(this.scene, this.camera);
+            //     return;
+            // }
+
+            // const refSpace = this.renderer.xr.getReferenceSpace();
+
+            // const views = frame.getViewerPose(refSpace).views;
+
+            // const pos = views[0].transform.position;
+
+            // // var c = renderer.xr.getCamera().cameras[0].position;
+
+            // this.renderer.xr.getCamera().cameras[ci].position.x = 100;
+
+            // this.renderer.xr.getCamera().cameras[ci].position.y = pos.y;
+            // this.renderer.xr.getCamera().cameras[ci].position.z = pos.z;
+
             this.renderer.render(this.scene, this.camera);
+
+            // ci = (ci + 1) % 2;
         });
     }
 
     render() {
         // NOTE: Update uniform data on each render.
         // this.uniforms.u_time.value += this.clock.getDelta();
-        this.renderer.render(this.scene, this.camera);
+        // this.renderer.render(this.scene, this.camera);
     }
 
     onWindowResize() {
