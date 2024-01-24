@@ -93,7 +93,7 @@ export default class SceneInit {
     animate() {
         // NOTE: Window is implied.
         // requestAnimationFrame(this.animate.bind(this));
-        window.requestAnimationFrame(this.animate.bind(this));
+        // window.requestAnimationFrame(this.animate.bind(this));
         // this.render();
         // this.stats.update();
         // this.controls.update();

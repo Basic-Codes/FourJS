@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import * as THREE from "three";
-import SceneInit from "../../helper/SceneInit";
+import SceneInit from "../../helper/core/SceneInit";
 import { GUI } from "dat.gui";
 
 function TutBaseScene() {

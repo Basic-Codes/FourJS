@@ -7,23 +7,6 @@ import {
     woodTexture,
 } from "./textures";
 
-export const addCube = (mainScene) => {
-    const mesh = new THREE.Mesh(
-        new THREE.BoxGeometry(0.1, 0.1, 0.1),
-        new THREE.MeshPhongMaterial({ color: "#e65959" })
-    );
-    mesh.position.set(0, 0.1, 0);
-    mesh.receiveShadow = true;
-    mainScene.scene.add(mesh);
-
-    const animate = () => {
-        mesh.rotation.x += 0.01;
-        mesh.rotation.y += 0.01;
-        window.requestAnimationFrame(animate);
-    };
-    animate();
-};
-
 export const makeRoom = (mainScene) => {
     const roomGroup = new THREE.Group();
     roomGroup.position.set(0, 0, 0);
