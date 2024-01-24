@@ -26,6 +26,8 @@ export default class SceneInit {
     }
 
     initialize(cameraPos) {
+        this.cgroup = new THREE.Group();
+
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(
             this.fov,
@@ -33,7 +35,10 @@ export default class SceneInit {
             0.1,
             10000
         );
-        // this.camera.position.z = cameraZPos;
+
+        this.cgroup.add(this.camera);
+        this.scene.add(this.cgroup);
+        this.cgroup.position.set(cameraPos.x, cameraPos.y, cameraPos.z);
         this.camera.position.set(cameraPos.x, cameraPos.y, cameraPos.z);
 
         // NOTE: Specify a canvas which is already created in the HTML.
@@ -46,9 +51,10 @@ export default class SceneInit {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.xr.enabled = true;
+        this.renderer.xr.setReferenceSpaceType("local");
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.PCFShadowMap;
-        this.scene.background = new THREE.Color("#ffa7e9");
+        this.scene.background = new THREE.Color("#a0a0a0");
         document.body.appendChild(this.renderer.domElement);
 
         this.clock = new THREE.Clock();
