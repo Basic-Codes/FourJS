@@ -29,6 +29,7 @@ function SocketTesting() {
 
     return (
         <div>
+            <div className="text-red-500">HELLO</div>
             <input
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
