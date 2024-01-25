@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { Vector3 } from "three";
 import SceneInit from "../../helper/core/SceneInit";
@@ -18,8 +18,11 @@ import {
 } from "../../helper/Modelling/classroomCore";
 
 function Classroom() {
+    const mainSceneRef = useRef(null);
+    const mainScene = mainSceneRef.current;
+
     const [chairs, setChairs] = useState(chairsData);
-    const [totalStudents, setTotalStudents] = useState(1);
+    const [totalStudents, setTotalStudents] = useState(0);
 
     const addCube = (mainScene) => {
         const mesh = new THREE.Mesh(
@@ -42,6 +45,7 @@ function Classroom() {
 
     useEffect(() => {
         const mainScene = new SceneInit("myThreeJsCanvas");
+        mainSceneRef.current = mainScene;
 
         // mainScene.initialize({ x: -3, y: 3, z: -3 });
         mainScene.initialize({ x: 0, y: 0.5, z: -1 });
@@ -51,32 +55,43 @@ function Classroom() {
         mainScene.renderer.setAnimationLoop(() => {
             mainScene.renderer.render(mainScene.scene, mainScene.camera);
         });
-        addCube(mainScene);
 
         makeRoom(mainScene);
         addBoard(mainScene);
+
+        addCube(mainScene);
+
         // chairs?.map((item) => {
         //     addTable(mainScene, item.position);
         // });
-        [...Array(totalStudents).keys()]?.map((i) => {
-            addTable(mainScene, chairs[i].position);
-        });
 
         // addSpotLight(mainScene);
 
         // ! VR Stuffs
         document.body.appendChild(VRButton.createButton(mainScene.renderer));
+    }, []);
+
+    useEffect(() => {
+        if (totalStudents > 0) {
+            [...Array(totalStudents).keys()]?.map((i) => {
+                addTable(mainScene, chairs[i].position);
+            });
+        }
     }, [totalStudents]);
 
     useEffect(() => {
-        onValue(
-            ref(db, "vr-classroom/session/my-code/total-students"),
-            async (snapshot) => {
-                const data = snapshot.val();
-                console.log(data);
-                setTotalStudents(data);
-            }
-        );
+        // onValue(
+        //     ref(db, "vr-classroom/session/my-code/total-students"),
+        //     async (snapshot) => {
+        //         const data = snapshot.val();
+        //         console.log(data);
+        //         setTotalStudents(data);
+        //     }
+        // );
+
+        setTimeout(() => {
+            setTotalStudents(5);
+        }, 4_000);
     }, []);
 
     return (
