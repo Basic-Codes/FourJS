@@ -7,6 +7,7 @@ function SocketTesting() {
     const [socket, setSocket] = useState(null);
     const [message, setMessage] = useState("");
     const [receivedMessages, setReceivedMessages] = useState([]);
+    const [receivedMousePos, setReceivedMousePos] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
         const newSocket = io(SOCKET_SERVER_URL);
@@ -19,6 +20,10 @@ function SocketTesting() {
             socket.on("message", (message) => {
                 setReceivedMessages((prev) => [...prev, message]);
             });
+            socket.on("mousePos", (data) => {
+                console.log(data);
+                setReceivedMousePos(data);
+            });
         }
     }, [socket]);
 
@@ -27,9 +32,21 @@ function SocketTesting() {
         setMessage("");
     };
 
+    const onMouseMove = (e) => {
+        // console.log(e.clientX, e.clientY);
+        socket.emit("mousePos", { x: e.clientX, y: e.clientY });
+    };
+
     return (
-        <div>
-            <div className="text-red-500">HELLO</div>
+        <div
+            onMouseMove={onMouseMove}
+            className="h-screen w-screen bg-emerald-100"
+        >
+            <div
+                style={{ left: receivedMousePos.x, top: receivedMousePos.y }}
+                className="absolute h-4 w-4 rounded-full bg-emerald-500"
+            ></div>
+
             <input
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}

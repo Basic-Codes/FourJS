@@ -21,8 +21,23 @@ const io = socketIo(server, {
     },
 });
 
+const sockets = new Set();
+
+function sendAll(src, name, data) {
+    sockets.forEach((socket) => {
+        if (socket !== src) {
+            try {
+                socket.emit(name, data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    });
+}
+
 io.on("connection", (socket) => {
     console.log("New client connected");
+    sockets.add(socket);
 
     socket.on("disconnect", () => {
         console.log("Client disconnected");
@@ -31,6 +46,16 @@ io.on("connection", (socket) => {
     socket.on("message", (data) => {
         console.log("Message received:", data);
         io.emit("message", data); // broadcasts the message to all clients
+    });
+
+    socket.on("mousePos", (data) => {
+        console.log("mousePos:", data);
+        // io.emit("mousePos", data); // broadcasts the message to all clients
+        sendAll(socket, "mousePos", data);
+    });
+
+    socket.on("disconnect", () => {
+        sockets.delete(socket);
     });
 });
 
