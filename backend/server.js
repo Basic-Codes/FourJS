@@ -25,12 +25,14 @@ const sockets = new Set();
 
 function sendAll(src, name, data) {
     sockets.forEach((socket) => {
-        if (socket !== src) {
-            try {
-                socket.emit(name, data);
-            } catch (error) {
-                console.error(error);
+        try {
+            if (socket !== src) {
+                socket.emit(name, { self: false, data });
+            } else {
+                socket.emit(name, { self: true, data });
             }
+        } catch (error) {
+            console.error(error);
         }
     });
 }
@@ -43,15 +45,12 @@ io.on("connection", (socket) => {
         console.log("Client disconnected");
     });
 
-    socket.on("message", (data) => {
-        console.log("Message received:", data);
-        io.emit("message", data); // broadcasts the message to all clients
+    socket.on("mousePos", (data) => {
+        sendAll(socket, "mousePos", data);
     });
 
-    socket.on("mousePos", (data) => {
-        console.log("mousePos:", data);
-        // io.emit("mousePos", data); // broadcasts the message to all clients
-        sendAll(socket, "mousePos", data);
+    socket.on("lineData", (data) => {
+        sendAll(socket, "lineData", data);
     });
 
     socket.on("disconnect", () => {

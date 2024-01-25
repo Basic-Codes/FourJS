@@ -319,25 +319,25 @@ const CanvasDraw = () => {
             { x: e.clientX, y: e.clientY },
         ]);
 
-        if (context) {
-            console.log("_______________________________");
-            drawStroke();
-        }
-
         // if (context) {
-        //     context.strokeStyle = "blue";
-        //     context.lineWidth = "2";
-        //     context.lineCap = "round";
-        //     context.lineJoin = "round";
-        //     context.stroke();
-
-        //     if (isMousePressed) {
-        //         context.lineTo(e.clientX, e.clientY);
-        //     } else {
-        //         context.stroke();
-        //         context.closePath();
-        //     }
+        //     console.log("_______________________________");
+        //     drawStroke();
         // }
+
+        if (context) {
+            context.strokeStyle = "blue";
+            context.lineWidth = "2";
+            context.lineCap = "round";
+            context.lineJoin = "round";
+            context.stroke();
+
+            if (isMousePressed) {
+                context.lineTo(e.clientX, e.clientY);
+            } else {
+                context.stroke();
+                context.closePath();
+            }
+        }
     };
 
     useEffect(() => {

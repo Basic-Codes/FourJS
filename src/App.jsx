@@ -6,7 +6,7 @@ import CanvasDraw from "./components/TestComponents/CanvasDraw";
 import Canvas2DOn3js from "./components/TestComponents/Canvas2DOn3js";
 import Classroom from "./components/Classroom/Classroom";
 import FirebaseTesting from "./components/TestComponents/FirebaseTesting";
-import SocketTesting from "./components/TestComponents/SocketTesting";
+import Whiteboard from "./components/Classroom/Whiteboard";
 
 function App() {
     return (
@@ -23,7 +23,7 @@ function App() {
 
             {/* <FirebaseTesting /> */}
 
-            <SocketTesting />
+            <Whiteboard />
 
             {/* <Classroom /> */}
         </div>
