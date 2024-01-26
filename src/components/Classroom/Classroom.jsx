@@ -31,6 +31,7 @@ function Classroom() {
         );
         mesh.position.set(0, 0.1, 0);
         mesh.receiveShadow = true;
+        mesh.name = "base_cube";
         mainScene.scene.add(mesh);
 
         const animate = () => {
@@ -74,24 +75,45 @@ function Classroom() {
     useEffect(() => {
         if (totalStudents > 0) {
             [...Array(totalStudents).keys()]?.map((i) => {
-                addTable(mainScene, chairs[i].position);
+                addTable(mainScene, i, chairs[i].position);
             });
         }
+
+        // ! traverse all objects
+        // if (mainScene) {
+        //     mainScene.scene?.traverse(function (child) {
+        //         if (child.name) {
+        //             console.log("name", child.name);
+        //             if (child.name == "table_0") {
+        //                 let selectedObject = mainScene.scene.getObjectByName(
+        //                     child.name
+        //                 );
+        //                 mainScene.scene.remove(selectedObject);
+        //             }
+        //         }
+        //     });
+        // }
+
+        // ! Remove Box
+        // if (totalStudents > 5) {
+        //     var selectedObject = mainScene.scene.getObjectByName("base_cube");
+        //     mainScene.scene.remove(selectedObject);
+        // }
     }, [totalStudents]);
 
     useEffect(() => {
-        // onValue(
-        //     ref(db, "vr-classroom/session/my-code/total-students"),
-        //     async (snapshot) => {
-        //         const data = snapshot.val();
-        //         console.log(data);
-        //         setTotalStudents(data);
-        //     }
-        // );
+        onValue(
+            ref(db, "vr-classroom/session/my-code/total-students"),
+            async (snapshot) => {
+                const data = snapshot.val();
+                console.log(data);
+                setTotalStudents(data);
+            }
+        );
 
-        setTimeout(() => {
-            setTotalStudents(5);
-        }, 4_000);
+        // setTimeout(() => {
+        //     setTotalStudents(5);
+        // }, 4_000);
     }, []);
 
     return (

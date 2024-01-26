@@ -23,9 +23,9 @@ function App() {
 
             {/* <FirebaseTesting /> */}
 
-            <Whiteboard />
+            {/* <Whiteboard /> */}
 
-            {/* <Classroom /> */}
+            <Classroom />
         </div>
     );
 }

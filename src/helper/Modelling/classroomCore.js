@@ -54,7 +54,11 @@ export const makeRoom = (mainScene) => {
     mainScene.scene.add(roomGroup);
 };
 
-export const addTable = (mainScene, position = new Vector3(0, 0, 0)) => {
+export const addTable = (
+    mainScene,
+    tableNo,
+    position = new Vector3(0, 0, 0)
+) => {
     const top = new THREE.Mesh(
         new THREE.BoxGeometry(1, 0.05, 0.7),
         new THREE.MeshPhongMaterial({ map: woodTexture() })
@@ -89,6 +93,7 @@ export const addTable = (mainScene, position = new Vector3(0, 0, 0)) => {
     group.add(leg3);
     group.add(leg4);
     group.position.set(position.x, position.y, position.z);
+    group.name = `table_${tableNo}`;
 
     mainScene.scene.add(group);
 };
