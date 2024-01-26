@@ -56,10 +56,12 @@ ROUT.post(
                     if (err) throw err;
                     res.json({
                         user: {
-                            name: user.name,
-                            email: user.email,
-                            isTeacher: user.isTeacher,
+                            id: newUser.id,
+                            name: newUser.name,
+                            email: newUser.email,
+                            isTeacher: newUser.isTeacher,
                         },
+                        token: token,
                     });
                 }
             );

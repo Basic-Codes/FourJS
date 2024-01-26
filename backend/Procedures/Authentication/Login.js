@@ -10,8 +10,15 @@ const UserModel = require("../../Database/UserModel");
 //@ Get Current Users Data --->  GET api/login | with middleware
 ROUT.get("/", auth_middleware, async (req, res) => {
     try {
-        const userData = await UserModel.findById(req.user).select("-password");
-        res.json(userData);
+        const user = await UserModel.findById(req.user).select("-password");
+        res.json({
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                isTeacher: user.isTeacher,
+            },
+        });
     } catch (err) {
         console.log(err.message);
         res.status(500).send("route/api/Login.js | Get ERROR.");
@@ -68,6 +75,7 @@ ROUT.post(
                     if (err) throw err;
                     res.json({
                         user: {
+                            id: user.id,
                             name: user.name,
                             email: user.email,
                             isTeacher: user.isTeacher,

@@ -1,4 +1,10 @@
 @host = http://localhost:8080
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjViM2VjNzkxZTQ0NGZkMzFkNTZhMWIyIiwiaWF0IjoxNzA2MjkwMzAzLCJleHAiOjE3MDYzMjYzMDN9.k31bXRihL5iGg86gNVlP7bcvJKwRtCitp63ZQCpV7m8
+
+### ! Get User
+GET {{host}}/api/login HTTP/1.1
+content-type: application/json
+x-auth-token: {{token}}
 
 
 ### ! Login
@@ -6,7 +12,7 @@ POST {{host}}/api/login HTTP/1.1
 content-type: application/json
 
 {
-    "email": "s@g.com",
+    "email": "r@g.com",
     "password": "sadd"
 }
 
@@ -15,7 +21,7 @@ POST {{host}}/api/signup HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Sad",
-    "email": "s@g.com",
+    "name": "Red",
+    "email": "r@g.com",
     "password": "sadd"
 }
