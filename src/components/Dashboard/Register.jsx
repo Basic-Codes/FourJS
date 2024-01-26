@@ -1,6 +1,8 @@
+import { Link } from "wouter";
+
 const SignUp = () => {
     return (
-        <div className="relative bg-[#f8faff] min-h-screen w-screen h-fit">
+        <div className="relative bg-[#f8faff] min-h-screen w-screen h-fit bg-i1">
             <div className="absolute-center bg-white rounded shadow p-10 w-96 h-screen sm:h-auto">
                 <div className="font-black font-jetbrains text-2xl mb-5 text-center">
                     Sign Up
@@ -31,16 +33,18 @@ const SignUp = () => {
                     />
                 </div>
 
-                <a href="/signup" className="mt-3 block text-xs">
-                    <span className="mr-1">Already have an accound?</span>
-                    <span className="font-semibold text-[#4B4DF7] cursor-pointer ">
-                        Signin
-                    </span>
-                </a>
+                <Link href="/login">
+                    <div className="mt-3 text-xs">
+                        <span className="mr-1">Already have an accound?</span>
+                        <span className="font-semibold text-[#4B4DF7] cursor-pointer ">
+                            Login
+                        </span>
+                    </div>
+                </Link>
 
-                <div className="w-full text-center mt-10">
+                <div className="w-full text-center mt-5">
                     <button className="px-5 py-1 text-lg bg-[#4B4DF7] text-white font-bold rounded">
-                        SignUp
+                        Sign Up
                     </button>
                 </div>
             </div>

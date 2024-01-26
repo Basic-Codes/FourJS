@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link, Route } from "wouter";
 import MyBaseScene from "./components/TestComponents/MyBaseScene";
 import TutBaseScene from "./components/TestComponents/TutBaseScene";
 import WebXRTest from "./components/TestComponents/WebXRTest";
@@ -8,6 +9,7 @@ import Classroom from "./components/Classroom/Classroom";
 import FirebaseTesting from "./components/TestComponents/FirebaseTesting";
 import Whiteboard from "./components/Classroom/Whiteboard";
 import Login from "./components/Dashboard/Login";
+import SignUp from "./components/Dashboard/Register";
 
 function App() {
     return (
@@ -28,7 +30,14 @@ function App() {
 
             {/* <Classroom /> */}
 
-            <Login />
+            <div>
+                <Route path="/about">About Us</Route>
+                <Route path="/users/:name">
+                    {(params) => <div>Hello, {params.name}!</div>}
+                </Route>
+                <Route path="/login" component={Login} />
+                <Route path="/signup" component={SignUp} />
+            </div>
         </div>
     );
 }

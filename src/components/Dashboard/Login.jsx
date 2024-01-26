@@ -1,3 +1,5 @@
+import { Link } from "wouter";
+
 const Login = () => {
     return (
         <div className="relative bg-[#f8faff] min-h-screen w-screen h-fit bg-i1">
@@ -31,12 +33,14 @@ const Login = () => {
                     />
                 </div>
 
-                <a href="/signup" className="mt-3 block text-xs">
-                    <span className="mr-1">Don't have an accound?</span>
-                    <span className="font-semibold text-[#4B4DF7] cursor-pointer ">
-                        Signup
-                    </span>
-                </a>
+                <Link href="/signup">
+                    <div className="mt-3 text-xs">
+                        <span className="mr-1">Don't have an accound?</span>
+                        <span className="font-semibold text-[#4B4DF7] cursor-pointer ">
+                            Sign Up
+                        </span>
+                    </div>
+                </Link>
 
                 <div className="w-full text-center mt-5">
                     <button className="px-5 py-1 text-lg bg-[#4B4DF7] text-white font-bold rounded">
