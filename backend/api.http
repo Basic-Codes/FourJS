@@ -1,0 +1,21 @@
+@host = http://localhost:8080
+
+
+### ! Login
+POST {{host}}/api/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "s@g.com",
+    "password": "sadd"
+}
+
+### ! Sign Up
+POST {{host}}/api/signup HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Sad",
+    "email": "s@g.com",
+    "password": "sadd"
+}

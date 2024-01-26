@@ -2,14 +2,16 @@ const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
 const cors = require("cors");
+const connectDB = require("./Database/MongoConnect");
+require("dotenv").config();
 
 const app = express();
+connectDB();
+app.use(express.json({ extended: false }));
 
 const corsOpts = {
     origin: "*",
-
     methods: ["GET", "POST"],
-
     allowedHeaders: ["Content-Type"],
 };
 app.use(cors(corsOpts));
@@ -22,7 +24,6 @@ const io = socketIo(server, {
 });
 
 const sockets = new Set();
-
 function sendAll(src, name, data) {
     sockets.forEach((socket) => {
         try {
@@ -36,7 +37,6 @@ function sendAll(src, name, data) {
         }
     });
 }
-
 io.on("connection", (socket) => {
     console.log("New client connected");
     sockets.add(socket);
@@ -58,5 +58,11 @@ io.on("connection", (socket) => {
     });
 });
 
+app.get("/", (req, res) => res.send("🍆🍆🍆🍆🍆🍆🍆🍆🍆🍆"));
+app.use("/api/login", require("./Procedures/Authentication/Login"));
+app.use("/api/signup", require("./Procedures/Authentication/Signup"));
+
 const PORT = process.env.PORT || 4000;
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+server.listen(PORT, () =>
+    console.log(`Server running on port ${PORT} | http://localhost:${PORT}`)
+);

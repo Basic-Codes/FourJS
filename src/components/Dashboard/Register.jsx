@@ -8,7 +8,7 @@ const SignUp = () => {
         name: "",
         email: "",
         password: "",
-        user_type: "teacher",
+        user_type: "student",
     });
 
     const onChange = (e) => {
