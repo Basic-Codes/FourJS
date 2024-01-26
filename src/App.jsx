@@ -7,6 +7,7 @@ import Canvas2DOn3js from "./components/TestComponents/Canvas2DOn3js";
 import Classroom from "./components/Classroom/Classroom";
 import FirebaseTesting from "./components/TestComponents/FirebaseTesting";
 import Whiteboard from "./components/Classroom/Whiteboard";
+import Login from "./components/Dashboard/Login";
 
 function App() {
     return (
@@ -25,7 +26,9 @@ function App() {
 
             {/* <Whiteboard /> */}
 
-            <Classroom />
+            {/* <Classroom /> */}
+
+            <Login />
         </div>
     );
 }

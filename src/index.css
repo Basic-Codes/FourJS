@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;800;900&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,4 +6,98 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.bg-i1 {
+    /* background-image: url("https://www.transparenttextures.com/patterns/gravel.png"); */
+    /* background-image: url("https://www.transparenttextures.com/patterns/crisp-paper-ruffles.png"); */
+    /* background-image: url("https://www.transparenttextures.com/patterns/inflicted.png"); */
+}
+
+.font-inter {
+    font-family: 'Inter', sans-serif;
+}
+.font-jetbrains {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.absolute-center {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+
+.fixed-center {
+    @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+::-webkit-scrollbar-thumb:active {
+    background: #fbb11a;
+}
+
+@media only screen and (max-width: 1023px) {
+    /* width */
+    ::-webkit-scrollbar {
+        width: 3px;
+        border-radius: 100%;
+    }
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #f0f0f0;
+    }
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #868686;
+    }
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #fbb11a;
+    }
+}
+
+.no-scrollbar {
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+
+    /* For Chrome, Safari, and Opera */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+.thin-scrollbar {
+    scrollbar-width: 4px; /* For Firefox */
+    -ms-overflow-style: 4px; /* For Internet Explorer and Edge */
+    /* For Chrome, Safari, and Opera */
+    &::-webkit-scrollbar {
+        width: 4px;
+        border-radius: 100%;
+    }
+}
+
+::-moz-selection {
+    /* Code for Firefox */
+    color: white;
+    background: #fbb11a;
+}
+
+::selection {
+    color: white;
+    background: #fbb11a;
 }
