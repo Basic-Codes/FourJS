@@ -13,7 +13,7 @@ import SignUp from "./components/Dashboard/Register";
 
 function App() {
     return (
-        <div>
+        <div className="overflow-x-hidden">
             {/* <MyBaseScene /> */}
 
             {/* <TutBaseScene /> */}
