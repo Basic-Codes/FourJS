@@ -9,35 +9,45 @@ import { XRHandModelFactory } from "three/addons/webxr/XRHandModelFactory.js";
 import { useState } from "react";
 import { ref, onValue } from "firebase/database";
 import { db } from "../../helper/firebase";
-import { chairsData } from "../../helper/staticVars";
+import { chairsData, vrCamOffset } from "../../helper/staticVars";
 import {
     addBoard,
     addSpotLight,
     addTable,
     makeRoom,
 } from "../../helper/Modelling/classroomCore";
+import { useParams } from "wouter";
 
 function Classroom() {
+    const params = useParams();
+
+    console.log(params.session_code);
+
     const mainSceneRef = useRef(null);
     const mainScene = mainSceneRef.current;
+    const testCubeRef = useRef(null);
+    const testCube = testCubeRef.current;
 
     const [chairs, setChairs] = useState(chairsData);
     const [totalStudents, setTotalStudents] = useState(0);
+    const [studentPlacementData, setStudentPlacementData] = useState(null);
 
     const addCube = (mainScene) => {
-        const mesh = new THREE.Mesh(
+        const cube = new THREE.Mesh(
             new THREE.BoxGeometry(0.1, 0.1, 0.1),
             new THREE.MeshNormalMaterial({ color: "#5962e6" })
         );
-        mesh.position.set(0, 0.1, 0);
-        mesh.receiveShadow = true;
-        mesh.name = "base_cube";
-        mainScene.scene.add(mesh);
+        cube.position.set(0, 0.1, 0);
+        cube.receiveShadow = true;
+        cube.name = "base_cube";
+        mainScene.scene.add(cube);
+
+        testCubeRef.current = cube;
 
         const animate = () => {
             if (totalStudents == 5) {
-                mesh.rotation.x += 0.01;
-                mesh.rotation.y += 0.01;
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
             }
             window.requestAnimationFrame(animate);
         };
@@ -46,11 +56,11 @@ function Classroom() {
 
     const addStudent = (mainScene, user_id, position) => {
         const student = new THREE.Group();
-        student.position.set(0, 0, 0);
+        student.position.set(position.x, position.y, position.z);
         student.name = `student_${user_id}`;
 
         const studentBase = new THREE.Mesh(
-            new THREE.BoxGeometry(position.x, position.y, position.z),
+            new THREE.BoxGeometry(0.2, 0.4, 0.2),
             new THREE.MeshPhongMaterial({ color: "#f26b6b" })
         );
         studentBase.position.set(0, 0, 0);
@@ -68,7 +78,14 @@ function Classroom() {
 
         // mainScene.initialize({ x: -2, y: 2, z: -2 });
         // mainScene.initialize({ x: 2, y: 5, z: -2 });
-        mainScene.initialize({ x: 0, y: 0.5, z: -1 });
+        // mainScene.initialize({ x: 0, y: 0.5, z: -1 });
+
+        const tempChairPos = new Vector3(0, 0, 0);
+        mainScene.initialize({
+            x: tempChairPos.x + vrCamOffset.x,
+            y: tempChairPos.y + vrCamOffset.y,
+            z: tempChairPos.z + vrCamOffset.z,
+        });
 
         // mainScene.animate();
 
@@ -81,8 +98,6 @@ function Classroom() {
 
         addCube(mainScene);
 
-        // addStudent(mainScene, "aaabbbccc", new Vector3(0.2, 0.2, 0.2));
-
         chairs?.map((item, index) => {
             addTable(mainScene, index, item.position);
         });
@@ -94,49 +109,115 @@ function Classroom() {
     }, []);
 
     useEffect(() => {
-        // ! Adding Table
-        if (totalStudents > 0) {
-            // [...Array(totalStudents).keys()]?.map((i) => {
-            //     addTable(mainScene, i, chairs[i].position);
-            // });
-        }
-
-        // ! traverse all objects
-        // if (mainScene) {
-        //     mainScene.scene?.traverse(function (child) {
-        //         if (child.name) {
-        //             console.log("name", child.name);
-        //             if (child.name == "table_0") {
-        //                 let selectedObject = mainScene.scene.getObjectByName(
-        //                     child.name
-        //                 );
-        //                 mainScene.scene.remove(selectedObject);
-        //             }
+        // ! Adding Student
+        // if (totalStudents > 0) {
+        //     [...Array(totalStudents).keys()]?.map((i) => {
+        //         let studentModel = mainScene.scene.getObjectByName(
+        //             `student_${i}`
+        //         );
+        //         if (studentModel) {
+        //             console.log(`student_${i} already exist`);
+        //         } else {
+        //             addStudent(mainScene, `${i}`, chairs[i].position);
         //         }
         //     });
         // }
 
-        // ! Remove Box
-        // if (totalStudents > 5) {
-        //     var selectedObject = mainScene.scene.getObjectByName("base_cube");
-        //     mainScene.scene.remove(selectedObject);
-        // }
-    }, [totalStudents]);
+        // ! Using Student Placement
+        if (mainScene && studentPlacementData) {
+            for (const [key, value] of Object.entries(studentPlacementData)) {
+                let studentModel = mainScene.scene.getObjectByName(
+                    `student_${key}`
+                );
+                if (studentModel) {
+                    console.log(`student_${key} already exist`);
+                } else {
+                    addStudent(mainScene, key, chairs[value.index].position);
+                }
+            }
+
+            const myPlacementData = studentPlacementData[params.student_id];
+            const myPos = chairs[myPlacementData.index].position;
+            console.log("myPos", myPos);
+            if (myPlacementData && myPos) {
+                const myPosVector = new Vector3(
+                    myPos.x + vrCamOffset.x,
+                    myPos.y + vrCamOffset.y,
+                    myPos.z + vrCamOffset.z
+                );
+                mainScene.cgroup.position.set(
+                    myPosVector.x,
+                    myPosVector.y,
+                    myPosVector.z
+                );
+                // mainScene.camera.position.set(
+                //     myPosVector.x,
+                //     myPosVector.y,
+                //     myPosVector.z
+                // );
+                testCube.position.set(
+                    myPosVector.x,
+                    myPosVector.y,
+                    myPosVector.z
+                );
+            }
+        }
+
+        // ! traverse all objects
+        let studentModelCount = 0;
+        if (mainScene) {
+            mainScene.scene?.traverse((child) => {
+                if (child.name) {
+                    // console.log("name", child.name);
+                    if (child.name.includes("student")) {
+                        studentModelCount += 1;
+                        // let selectedObject = mainScene.scene.getObjectByName(child.name);
+                        // mainScene.scene.remove(selectedObject);
+                    }
+                }
+            });
+        }
+        console.log("studentModelCount", studentModelCount);
+    }, [totalStudents, studentPlacementData, mainScene]);
 
     useEffect(() => {
-        onValue(
-            ref(db, "vr-classroom/session/my-code/total-students"),
-            async (snapshot) => {
-                const data = snapshot.val();
-                console.log(data);
-                setTotalStudents(data);
-            }
-        );
+        if (params?.session_code) {
+            onValue(
+                ref(
+                    db,
+                    `vr-classroom/session/${params?.session_code}/total-students`
+                ),
+                async (snapshot) => {
+                    const data = snapshot.val();
+                    console.log("total-students", data);
+                    setTotalStudents(data);
+                }
+            );
 
-        // setTimeout(() => {
-        //     setTotalStudents(5);
-        // }, 4_000);
+            onValue(
+                ref(
+                    db,
+                    `vr-classroom/session/${params?.session_code}/student-placement`
+                ),
+                async (snapshot) => {
+                    const data = snapshot.val();
+                    console.log("student-placement", data);
+                    setStudentPlacementData(data);
+                }
+            );
+        }
     }, []);
+
+    // ! Testing
+    useEffect(() => {
+        setTimeout(() => {
+            if (mainScene) {
+                // console.log("Changing Camera Pos");
+                // mainScene.cgroup.position.set(0, 5, 0);
+                // mainScene.camera.position.set(0, 5, 0);
+            }
+        }, 4_000);
+    }, [mainScene]);
 
     return (
         <div>

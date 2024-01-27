@@ -1,5 +1,6 @@
 import { Vector3 } from "three";
 
+export const vrCamOffset = { x: 0, y: 0.3, z: -0.7 };
 export const chairsData = [
     // First Row
     {

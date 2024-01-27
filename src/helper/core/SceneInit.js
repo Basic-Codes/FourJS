@@ -7,6 +7,7 @@ export default class SceneInit {
         // NOTE: Core components to initialize Three.js app.
         this.scene = undefined;
         this.camera = undefined;
+        this.cgroup = undefined;
         this.renderer = undefined;
 
         // NOTE: Camera params;

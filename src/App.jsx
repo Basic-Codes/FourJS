@@ -28,17 +28,20 @@ function App() {
 
             {/* <Whiteboard /> */}
 
-            <Classroom />
+            {/* <Classroom /> */}
 
-            {/* <div>
-                <Route path="/about">About Us</Route>
+            <div>
+                <Route path="/">Hello</Route>
+                <Route path="/session/:session_code/:student_id">
+                    <Classroom />
+                </Route>
                 <Route path="/users/:name">
                     {(params) => <div>Hello, {params.name}!</div>}
                 </Route>
                 <Route path="/login" component={Login} />
                 <Route path="/signup" component={SignUp} />
                 <Route path="/signup" component={SignUp} />
-            </div> */}
+            </div>
         </div>
     );
 }
