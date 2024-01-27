@@ -164,7 +164,7 @@ export const addStudent = (mainScene, user_id, position) => {
     return student;
 };
 
-export const addBoard = (mainScene) => {
+export const addBoard = (mainScene, whiteBoardRef) => {
     const boardGroup = new THREE.Group();
     boardGroup.position.set(0, 1, 5 - 0.05);
 
@@ -203,6 +203,8 @@ export const addBoard = (mainScene) => {
     boardGroup.add(frameBottom);
     boardGroup.add(frameLeft);
     boardGroup.add(frameRight);
+
+    whiteBoardRef.current = board;
 
     mainScene.scene.add(boardGroup);
 };

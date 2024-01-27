@@ -19,15 +19,16 @@ import {
 } from "../../helper/Modelling/classroomCore";
 import { useParams } from "wouter";
 import { useQueryParams } from "react-use-query-params";
+import FakeWhiteboard from "./FakeWhiteboard";
 
 function Classroom() {
     const params = useParams();
     const { hasParam } = useQueryParams();
 
-    console.log(params.session_code);
-
     const mainSceneRef = useRef(null);
     const mainScene = mainSceneRef.current;
+    const whiteBoardRef = useRef(null);
+    const whiteBoard = whiteBoardRef.current;
     const testCubeRef = useRef(null);
     const testCube = testCubeRef.current;
 
@@ -83,7 +84,7 @@ function Classroom() {
         // });
 
         makeRoom(mainScene);
-        addBoard(mainScene);
+        addBoard(mainScene, whiteBoardRef);
 
         addCube(mainScene);
 
@@ -138,7 +139,6 @@ function Classroom() {
             if (!hasParam("isTesting")) {
                 const myPlacementData = studentPlacementData[params.student_id];
                 const myPos = chairs[myPlacementData.index].position;
-                console.log("myPos", myPos);
                 if (myPlacementData && myPos) {
                     const myPosVector = new Vector3(
                         myPos.x + vrCamOffset.x,
@@ -204,17 +204,18 @@ function Classroom() {
     // ! Testing
     useEffect(() => {
         setTimeout(() => {
-            if (mainScene) {
+            if (mainScene && whiteBoard) {
                 // console.log("Changing Camera Pos");
                 // mainScene.cgroup.position.set(0, 5, 0);
                 // mainScene.camera.position.set(0, 5, 0);
             }
         }, 4_000);
-    }, [mainScene]);
+    }, [mainScene, whiteBoard]);
 
     return (
         <div>
             <canvas id="myThreeJsCanvas" />
+            <FakeWhiteboard whiteBoard={whiteBoard} />
         </div>
     );
 }
