@@ -32,8 +32,11 @@ function App() {
 
             <div>
                 <Route path="/">Hello</Route>
-                <Route path="/session/:session_code/:student_id">
+                <Route path="/session/:session_code/student/:student_id">
                     <Classroom />
+                </Route>
+                <Route path="/session/:session_code/teacher">
+                    <Whiteboard />
                 </Route>
                 <Route path="/users/:name">
                     {(params) => <div>Hello, {params.name}!</div>}

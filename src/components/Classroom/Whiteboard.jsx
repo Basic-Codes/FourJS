@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import io from "socket.io-client";
-
-const SOCKET_SERVER_URL = "http://localhost:4000";
+import { SOCKET_SERVER_URL } from "../../helper/staticVars";
 
 function Whiteboard() {
     const [socket, setSocket] = useState(null);
@@ -96,6 +95,11 @@ function Whiteboard() {
                 onTouchMove={onMouseMove}
                 onMouseDown={() => setIsMousePressed(true)}
                 onMouseUp={(e) => {
+                    onMouseMove(e);
+                    setIsMousePressed(false);
+                }}
+                onTouchStart={() => setIsMousePressed(true)}
+                onTouchEnd={(e) => {
                     onMouseMove(e);
                     setIsMousePressed(false);
                 }}

@@ -2,25 +2,27 @@ import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import Stats from "three/examples/jsm/libs/stats.module";
-import { testLine } from "../../helper/staticVars";
+import io from "socket.io-client";
+import { SOCKET_SERVER_URL, testLine } from "../../helper/staticVars";
 
-const FakeWhiteboard = ({ whiteBoard }) => {
+const FakeWhiteboard = ({ update3DWhiteboard }) => {
+    const [socket, setSocket] = useState(null);
     const [context, setContext] = useState(null);
     const canvasRef = useRef(null);
 
-    function drawStroke() {
+    function drawStroke(strokeData) {
         context.beginPath();
-        context.moveTo(testLine[0].x, testLine[0].y);
+        context.moveTo(strokeData[0].x, strokeData[0].y);
 
-        testLine.forEach((point) => {
+        strokeData.forEach((point) => {
             context.lineTo(point.x, point.y);
         });
 
         context.strokeStyle = "#000000";
         context.lineWidth = 2;
         context.stroke();
+
+        makeTextureFromCanvas();
     }
 
     useEffect(() => {
@@ -42,24 +44,37 @@ const FakeWhiteboard = ({ whiteBoard }) => {
                 canvasRef?.current?.height
             );
 
-            drawStroke();
+            // drawStroke(testLine);
         }
     }, [context, canvasRef]);
 
-    const update3DWhiteboard = () => {
-        if (whiteBoard) {
-            const texture = new THREE.Texture(canvasRef?.current);
-            texture.needsUpdate = true;
-            const updatedMat = new THREE.MeshPhongMaterial({ map: texture });
-            whiteBoard.material = updatedMat;
-        } else {
-            console.log("whiteBoard not found");
-        }
+    const makeTextureFromCanvas = () => {
+        const texture = new THREE.Texture(canvasRef?.current);
+        texture.needsUpdate = true;
+        update3DWhiteboard(texture);
     };
 
+    // useEffect(() => {
+    //     makeTextureFromCanvas();
+    // }, []);
+
     useEffect(() => {
-        update3DWhiteboard();
-    }, [whiteBoard]);
+        const newSocket = io(SOCKET_SERVER_URL);
+        setSocket(newSocket);
+        return () => newSocket.close();
+    }, [setSocket]);
+
+    useEffect(() => {
+        if (socket) {
+            socket.on("lineData", (data) => {
+                if (data?.self) {
+                    // Do nothing
+                } else {
+                    drawStroke(data.data);
+                }
+            });
+        }
+    }, [socket]);
 
     return <canvas ref={canvasRef} className="hidden"></canvas>;
 };

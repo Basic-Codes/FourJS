@@ -231,6 +231,7 @@ export const addBoard = (mainScene, whiteBoardRef) => {
         new THREE.MeshPhongMaterial({ color: "#ffffff" })
     );
     board.position.set(0, 0, 0);
+    board.name = "main_board";
 
     const frameTop = new THREE.Mesh(
         new THREE.BoxGeometry(3.2, 0.1, 0.15),

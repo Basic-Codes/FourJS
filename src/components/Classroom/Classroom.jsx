@@ -37,6 +37,15 @@ function Classroom() {
     const [totalStudents, setTotalStudents] = useState(0);
     const [studentPlacementData, setStudentPlacementData] = useState(null);
 
+    const update3DWhiteboard = (texture) => {
+        if (whiteBoardRef?.current) {
+            const updatedMat = new THREE.MeshPhongMaterial({ map: texture });
+            whiteBoardRef.current.material = updatedMat;
+        } else {
+            console.log("Whiteboard Not Found");
+        }
+    };
+
     useEffect(() => {
         const mainScene = new SceneInit("myThreeJsCanvas");
         mainSceneRef.current = mainScene;
@@ -134,7 +143,6 @@ function Classroom() {
                 }
             });
         }
-        console.log("studentModelCount", studentModelCount);
     }, [totalStudents, studentPlacementData, mainScene]);
 
     // ! Firebase Stuffs
@@ -147,7 +155,6 @@ function Classroom() {
                 ),
                 async (snapshot) => {
                     const data = snapshot.val();
-                    console.log("total-students", data);
                     setTotalStudents(data);
                 }
             );
@@ -159,7 +166,6 @@ function Classroom() {
                 ),
                 async (snapshot) => {
                     const data = snapshot.val();
-                    console.log("student-placement", data);
                     setStudentPlacementData(data);
                 }
             );
@@ -174,7 +180,7 @@ function Classroom() {
     return (
         <div>
             <canvas id="myThreeJsCanvas" />
-            <FakeWhiteboard whiteBoard={whiteBoard} />
+            <FakeWhiteboard update3DWhiteboard={update3DWhiteboard} />
         </div>
     );
 }
