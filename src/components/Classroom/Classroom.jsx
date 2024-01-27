@@ -18,9 +18,11 @@ import {
     makeRoom,
 } from "../../helper/Modelling/classroomCore";
 import { useParams } from "wouter";
+import { useQueryParams } from "react-use-query-params";
 
 function Classroom() {
     const params = useParams();
+    const { hasParam } = useQueryParams();
 
     console.log(params.session_code);
 
@@ -63,12 +65,16 @@ function Classroom() {
         // mainScene.initialize({ x: 2, y: 5, z: -2 });
         // mainScene.initialize({ x: 0, y: 0.5, z: -1 });
 
-        const tempChairPos = new Vector3(0, 0, 0);
-        mainScene.initialize({
-            x: tempChairPos.x + vrCamOffset.x,
-            y: tempChairPos.y + vrCamOffset.y,
-            z: tempChairPos.z + vrCamOffset.z,
-        });
+        if (hasParam("isTesting")) {
+            mainScene.initialize({ x: 2, y: 5, z: -2 });
+        } else {
+            const tempChairPos = new Vector3(0, 0, 0);
+            mainScene.initialize({
+                x: tempChairPos.x + vrCamOffset.x,
+                y: tempChairPos.y + vrCamOffset.y,
+                z: tempChairPos.z + vrCamOffset.z,
+            });
+        }
 
         // mainScene.animate();
 
@@ -108,6 +114,7 @@ function Classroom() {
 
         // ! Using Student Placement
         if (mainScene && studentPlacementData) {
+            // ! Render All Students
             for (const [key, value] of Object.entries(studentPlacementData)) {
                 let studentModel = mainScene.scene.getObjectByName(
                     `student_${key}`
@@ -125,21 +132,24 @@ function Classroom() {
                 }
             }
 
-            const myPlacementData = studentPlacementData[params.student_id];
-            const myPos = chairs[myPlacementData.index].position;
-            console.log("myPos", myPos);
-            if (myPlacementData && myPos) {
-                const myPosVector = new Vector3(
-                    myPos.x + vrCamOffset.x,
-                    myPos.y + vrCamOffset.y,
-                    myPos.z + vrCamOffset.z
-                );
-                mainScene.cgroup.position.set(
-                    myPosVector.x,
-                    myPosVector.y,
-                    myPosVector.z
-                );
-                testCube.position.set(myPos.x, myPos.y + 0.07, myPos.z);
+            // ! Place My camera in proper position
+            if (!hasParam("isTesting")) {
+                const myPlacementData = studentPlacementData[params.student_id];
+                const myPos = chairs[myPlacementData.index].position;
+                console.log("myPos", myPos);
+                if (myPlacementData && myPos) {
+                    const myPosVector = new Vector3(
+                        myPos.x + vrCamOffset.x,
+                        myPos.y + vrCamOffset.y,
+                        myPos.z + vrCamOffset.z
+                    );
+                    mainScene.cgroup.position.set(
+                        myPosVector.x,
+                        myPosVector.y,
+                        myPosVector.z
+                    );
+                    testCube.position.set(myPos.x, myPos.y + 0.07, myPos.z);
+                }
             }
         }
 
