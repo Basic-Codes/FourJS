@@ -76,11 +76,11 @@ function Classroom() {
             });
         }
 
-        // mainScene.animate();
+        mainScene.animate();
 
-        mainScene.renderer.setAnimationLoop(() => {
-            mainScene.renderer.render(mainScene.scene, mainScene.camera);
-        });
+        // mainScene.renderer.setAnimationLoop(() => {
+        //     mainScene.renderer.render(mainScene.scene, mainScene.camera);
+        // });
 
         makeRoom(mainScene);
         addBoard(mainScene);
@@ -128,7 +128,9 @@ function Classroom() {
                         placeableChairPos.y + vrCamOffset.y,
                         placeableChairPos.z + vrCamOffset.z
                     );
-                    addStudent(mainScene, key, studentPosVector);
+                    if (key != params.student_id) {
+                        addStudent(mainScene, key, studentPosVector);
+                    }
                 }
             }
 
