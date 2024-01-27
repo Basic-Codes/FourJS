@@ -138,7 +138,9 @@ function Classroom() {
             // ! Place My camera in proper position
             if (!hasParam("isTesting")) {
                 const myPlacementData = studentPlacementData[params.student_id];
-                const myPos = chairs[myPlacementData.index].position;
+                const myPos = myPlacementData?.index
+                    ? chairs[myPlacementData.index].position
+                    : null;
                 if (myPlacementData && myPos) {
                     const myPosVector = new Vector3(
                         myPos.x + vrCamOffset.x,
