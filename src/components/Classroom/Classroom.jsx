@@ -12,6 +12,7 @@ import { db } from "../../helper/firebase";
 import { chairsData, vrCamOffset } from "../../helper/staticVars";
 import {
     addBoard,
+    addCube,
     addSpotLight,
     addStudent,
     addTable,
@@ -33,31 +34,8 @@ function Classroom() {
     const testCubeRef = useRef(null);
     const testCube = testCubeRef.current;
 
-    const [chairs, setChairs] = useState(chairsData);
     const [totalStudents, setTotalStudents] = useState(0);
     const [studentPlacementData, setStudentPlacementData] = useState(null);
-
-    const addCube = (mainScene) => {
-        const cube = new THREE.Mesh(
-            new THREE.BoxGeometry(0.1, 0.1, 0.1),
-            new THREE.MeshNormalMaterial({ color: "#5962e6" })
-        );
-        cube.position.set(0, 0.1, 0);
-        cube.receiveShadow = true;
-        cube.name = "base_cube";
-        mainScene.scene.add(cube);
-
-        testCubeRef.current = cube;
-
-        const animate = () => {
-            if (totalStudents == 5) {
-                cube.rotation.x += 0.01;
-                cube.rotation.y += 0.01;
-            }
-            window.requestAnimationFrame(animate);
-        };
-        animate();
-    };
 
     useEffect(() => {
         const mainScene = new SceneInit("myThreeJsCanvas");
@@ -80,20 +58,14 @@ function Classroom() {
 
         mainScene.animate();
 
-        // mainScene.renderer.setAnimationLoop(() => {
-        //     mainScene.renderer.render(mainScene.scene, mainScene.camera);
-        // });
-
         makeRoom(mainScene);
         addBoard(mainScene, whiteBoardRef);
 
-        addCube(mainScene);
+        addCube(mainScene, testCubeRef);
 
-        chairs?.map((item, index) => {
+        chairsData?.map((item, index) => {
             addTable(mainScene, index, item.position);
         });
-
-        // addSpotLight(mainScene);
 
         // ! VR Stuffs
         document.body.appendChild(VRButton.createButton(mainScene.renderer));
@@ -110,7 +82,7 @@ function Classroom() {
                 if (studentModel) {
                     console.log(`student_${key} already exist`);
                 } else {
-                    const placeableChairPos = chairs[value.index].position;
+                    const placeableChairPos = chairsData[value.index].position;
                     const studentPosVector = new Vector3(
                         placeableChairPos.x + vrCamOffset.x,
                         placeableChairPos.y + vrCamOffset.y,
@@ -131,7 +103,7 @@ function Classroom() {
             if (!hasParam("isTesting")) {
                 const myPlacementData = studentPlacementData[params.student_id];
                 const myPos = myPlacementData?.index
-                    ? chairs[myPlacementData.index].position
+                    ? chairsData[myPlacementData.index].position
                     : null;
                 if (myPlacementData && myPos) {
                     const myPosVector = new Vector3(
@@ -154,7 +126,6 @@ function Classroom() {
         if (mainScene) {
             mainScene.scene?.traverse((child) => {
                 if (child.name) {
-                    // console.log("name", child.name);
                     if (child.name.includes("student")) {
                         studentModelCount += 1;
                         // let selectedObject = mainScene.scene.getObjectByName(child.name);
@@ -197,14 +168,8 @@ function Classroom() {
 
     // ! Testing
     useEffect(() => {
-        setTimeout(() => {
-            if (mainScene && whiteBoard) {
-                // console.log("Changing Camera Pos");
-                // mainScene.cgroup.position.set(0, 5, 0);
-                // mainScene.camera.position.set(0, 5, 0);
-            }
-        }, 4_000);
-    }, [mainScene, whiteBoard]);
+        setTimeout(() => {}, 4_000);
+    }, [mainScene]);
 
     return (
         <div>

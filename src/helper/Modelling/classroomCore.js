@@ -11,6 +11,26 @@ import {
     woodTexture,
 } from "./textures";
 
+export const addCube = (mainScene, testCubeRef) => {
+    const cube = new THREE.Mesh(
+        new THREE.BoxGeometry(0.1, 0.1, 0.1),
+        new THREE.MeshNormalMaterial({ color: "#5962e6" })
+    );
+    cube.position.set(0, 0.1, 0);
+    cube.receiveShadow = true;
+    cube.name = "base_cube";
+    mainScene.scene.add(cube);
+
+    testCubeRef.current = cube;
+
+    const animate = () => {
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+        window.requestAnimationFrame(animate);
+    };
+    animate();
+};
+
 export const makeRoom = (mainScene) => {
     const roomGroup = new THREE.Group();
     roomGroup.position.set(0, 0, 0);
