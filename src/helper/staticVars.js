@@ -1,6 +1,72 @@
 import { Vector3 } from "three";
 
 export const chairsData = [
+    // First Row
+    {
+        position: new Vector3(4, 0, 2),
+    },
+    {
+        position: new Vector3(2, 0, 2),
+    },
+    {
+        position: new Vector3(0, 0, 2),
+    },
+    {
+        position: new Vector3(-2, 0, 2),
+    },
+    {
+        position: new Vector3(-4, 0, 2),
+    },
+    // Second Row
+    {
+        position: new Vector3(4, 0, 0),
+    },
+    {
+        position: new Vector3(2, 0, 0),
+    },
+    {
+        position: new Vector3(0, 0, 0),
+    },
+    {
+        position: new Vector3(-2, 0, 0),
+    },
+    {
+        position: new Vector3(-4, 0, 0),
+    },
+    // Third Row
+    {
+        position: new Vector3(4, 0, -2),
+    },
+    {
+        position: new Vector3(2, 0, -2),
+    },
+    {
+        position: new Vector3(0, 0, -2),
+    },
+    {
+        position: new Vector3(-2, 0, -2),
+    },
+    {
+        position: new Vector3(-4, 0, -2),
+    },
+    // Third Row
+    {
+        position: new Vector3(4, 0, -4),
+    },
+    {
+        position: new Vector3(2, 0, -4),
+    },
+    {
+        position: new Vector3(0, 0, -4),
+    },
+    {
+        position: new Vector3(-2, 0, -4),
+    },
+    {
+        position: new Vector3(-4, 0, -4),
+    },
+];
+export const chairsData_OLD = [
     // Front Seats
     {
         position: new Vector3(-2, 0, 0),

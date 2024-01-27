@@ -67,6 +67,7 @@ function Classroom() {
         mainSceneRef.current = mainScene;
 
         // mainScene.initialize({ x: -2, y: 2, z: -2 });
+        // mainScene.initialize({ x: 2, y: 5, z: -2 });
         mainScene.initialize({ x: 0, y: 0.5, z: -1 });
 
         // mainScene.animate();
