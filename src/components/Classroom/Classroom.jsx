@@ -27,7 +27,7 @@ function Classroom() {
     const addCube = (mainScene) => {
         const mesh = new THREE.Mesh(
             new THREE.BoxGeometry(0.1, 0.1, 0.1),
-            new THREE.MeshNormalMaterial({ color: "#e65959" })
+            new THREE.MeshNormalMaterial({ color: "#5962e6" })
         );
         mesh.position.set(0, 0.1, 0);
         mesh.receiveShadow = true;
@@ -44,11 +44,29 @@ function Classroom() {
         animate();
     };
 
+    const addStudent = (mainScene, user_id, position) => {
+        const student = new THREE.Group();
+        student.position.set(0, 0, 0);
+        student.name = `student_${user_id}`;
+
+        const studentBase = new THREE.Mesh(
+            new THREE.BoxGeometry(position.x, position.y, position.z),
+            new THREE.MeshPhongMaterial({ color: "#f26b6b" })
+        );
+        studentBase.position.set(0, 0, 0);
+        studentBase.receiveShadow = true;
+
+        student.add(studentBase);
+        mainScene.scene.add(student);
+
+        return student;
+    };
+
     useEffect(() => {
         const mainScene = new SceneInit("myThreeJsCanvas");
         mainSceneRef.current = mainScene;
 
-        // mainScene.initialize({ x: -3, y: 3, z: -3 });
+        // mainScene.initialize({ x: -2, y: 2, z: -2 });
         mainScene.initialize({ x: 0, y: 0.5, z: -1 });
 
         // mainScene.animate();
@@ -62,9 +80,11 @@ function Classroom() {
 
         addCube(mainScene);
 
-        // chairs?.map((item) => {
-        //     addTable(mainScene, item.position);
-        // });
+        // addStudent(mainScene, "aaabbbccc", new Vector3(0.2, 0.2, 0.2));
+
+        chairs?.map((item, index) => {
+            addTable(mainScene, index, item.position);
+        });
 
         // addSpotLight(mainScene);
 
@@ -73,10 +93,11 @@ function Classroom() {
     }, []);
 
     useEffect(() => {
+        // ! Adding Table
         if (totalStudents > 0) {
-            [...Array(totalStudents).keys()]?.map((i) => {
-                addTable(mainScene, i, chairs[i].position);
-            });
+            // [...Array(totalStudents).keys()]?.map((i) => {
+            //     addTable(mainScene, i, chairs[i].position);
+            // });
         }
 
         // ! traverse all objects

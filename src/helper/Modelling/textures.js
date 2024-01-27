@@ -3,6 +3,9 @@ import * as THREE from "three";
 export const woodTexture = () => {
     return new THREE.TextureLoader().load("textures/wood.jpg");
 };
+export const wood2Texture = () => {
+    return new THREE.TextureLoader().load("textures/wood2.jpg");
+};
 export const ironTexture = () => {
     return new THREE.TextureLoader().load("textures/iron.jpg");
 };

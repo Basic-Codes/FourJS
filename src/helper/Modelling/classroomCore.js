@@ -4,6 +4,7 @@ import {
     ironTexture,
     tilesTexture,
     wallTexture,
+    wood2Texture,
     woodTexture,
 } from "./textures";
 
@@ -86,14 +87,61 @@ export const addTable = (
     );
     leg4.position.set(-0.4, -0.25, 0.3);
 
+    const tableG = new THREE.Group();
+    tableG.add(top);
+    tableG.add(leg1);
+    tableG.add(leg2);
+    tableG.add(leg3);
+    tableG.add(leg4);
+    tableG.position.set(0, 0, 0);
+
+    // ! Adding Chair
+    const chairBase = new THREE.Mesh(
+        new THREE.BoxGeometry(0.3, 0.03, 0.3),
+        new THREE.MeshPhongMaterial({ map: wood2Texture() })
+    );
+    chairBase.position.set(0, -0.18, 0);
+    const chairBack = new THREE.Mesh(
+        new THREE.BoxGeometry(0.3, 0.4, 0.03),
+        new THREE.MeshPhongMaterial({ map: wood2Texture() })
+    );
+    chairBack.position.set(0, 0.02, -0.15);
+    const chairLeg1 = new THREE.Mesh(
+        new THREE.BoxGeometry(0.03, 0.35, 0.03),
+        new THREE.MeshPhongMaterial({ map: ironTexture() })
+    );
+    chairLeg1.position.set(-0.13, -0.36, -0.13);
+    const chairLeg2 = new THREE.Mesh(
+        new THREE.BoxGeometry(0.03, 0.35, 0.03),
+        new THREE.MeshPhongMaterial({ map: ironTexture() })
+    );
+    chairLeg2.position.set(0.13, -0.36, -0.13);
+    const chairLeg3 = new THREE.Mesh(
+        new THREE.BoxGeometry(0.03, 0.35, 0.03),
+        new THREE.MeshPhongMaterial({ map: ironTexture() })
+    );
+    chairLeg3.position.set(0.13, -0.36, 0.13);
+    const chairLeg4 = new THREE.Mesh(
+        new THREE.BoxGeometry(0.03, 0.35, 0.03),
+        new THREE.MeshPhongMaterial({ map: ironTexture() })
+    );
+    chairLeg4.position.set(-0.13, -0.36, 0.13);
+
+    const chairG = new THREE.Group();
+    chairG.add(chairBase);
+    chairG.add(chairBack);
+    chairG.add(chairLeg1);
+    chairG.add(chairLeg2);
+    chairG.add(chairLeg3);
+    chairG.add(chairLeg4);
+    chairG.position.set(0, 0, -0.7);
+
     const group = new THREE.Group();
-    group.add(top);
-    group.add(leg1);
-    group.add(leg2);
-    group.add(leg3);
-    group.add(leg4);
-    group.position.set(position.x, position.y, position.z);
     group.name = `table_${tableNo}`;
+    group.position.set(position.x, position.y, position.z);
+
+    group.add(tableG);
+    group.add(chairG);
 
     mainScene.scene.add(group);
 };
@@ -110,25 +158,25 @@ export const addBoard = (mainScene) => {
 
     const frameTop = new THREE.Mesh(
         new THREE.BoxGeometry(3.2, 0.1, 0.15),
-        new THREE.MeshPhongMaterial({ color: "#914f18" })
+        new THREE.MeshPhongMaterial({ map: wood2Texture() })
     );
     frameTop.position.set(0, 1, 0);
 
     const frameBottom = new THREE.Mesh(
         new THREE.BoxGeometry(3.2, 0.1, 0.15),
-        new THREE.MeshPhongMaterial({ color: "#914f18" })
+        new THREE.MeshPhongMaterial({ map: wood2Texture() })
     );
     frameBottom.position.set(0, -1, 0);
 
     const frameLeft = new THREE.Mesh(
         new THREE.BoxGeometry(0.1, 2.1, 0.15),
-        new THREE.MeshPhongMaterial({ color: "#914f18" })
+        new THREE.MeshPhongMaterial({ map: wood2Texture() })
     );
     frameLeft.position.set(1.55, 0, 0);
 
     const frameRight = new THREE.Mesh(
         new THREE.BoxGeometry(0.1, 2.1, 0.15),
-        new THREE.MeshPhongMaterial({ color: "#914f18" })
+        new THREE.MeshPhongMaterial({ map: wood2Texture() })
     );
     frameRight.position.set(-1.55, 0, 0);
 
