@@ -146,6 +146,24 @@ export const addTable = (
     mainScene.scene.add(group);
 };
 
+export const addStudent = (mainScene, user_id, position) => {
+    const student = new THREE.Group();
+    student.position.set(position.x, position.y, position.z);
+    student.name = `student_${user_id}`;
+
+    const studentBase = new THREE.Mesh(
+        new THREE.BoxGeometry(0.2, 0.4, 0.2),
+        new THREE.MeshPhongMaterial({ color: "#f26b6b" })
+    );
+    studentBase.position.set(0, -0.25, 0);
+    studentBase.receiveShadow = true;
+
+    student.add(studentBase);
+    mainScene.scene.add(student);
+
+    return student;
+};
+
 export const addBoard = (mainScene) => {
     const boardGroup = new THREE.Group();
     boardGroup.position.set(0, 1, 5 - 0.05);

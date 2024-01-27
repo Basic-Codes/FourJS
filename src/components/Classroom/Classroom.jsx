@@ -13,6 +13,7 @@ import { chairsData, vrCamOffset } from "../../helper/staticVars";
 import {
     addBoard,
     addSpotLight,
+    addStudent,
     addTable,
     makeRoom,
 } from "../../helper/Modelling/classroomCore";
@@ -52,24 +53,6 @@ function Classroom() {
             window.requestAnimationFrame(animate);
         };
         animate();
-    };
-
-    const addStudent = (mainScene, user_id, position) => {
-        const student = new THREE.Group();
-        student.position.set(position.x, position.y, position.z);
-        student.name = `student_${user_id}`;
-
-        const studentBase = new THREE.Mesh(
-            new THREE.BoxGeometry(0.2, 0.4, 0.2),
-            new THREE.MeshPhongMaterial({ color: "#f26b6b" })
-        );
-        studentBase.position.set(0, 0, 0);
-        studentBase.receiveShadow = true;
-
-        student.add(studentBase);
-        mainScene.scene.add(student);
-
-        return student;
     };
 
     useEffect(() => {
@@ -132,7 +115,13 @@ function Classroom() {
                 if (studentModel) {
                     console.log(`student_${key} already exist`);
                 } else {
-                    addStudent(mainScene, key, chairs[value.index].position);
+                    const placeableChairPos = chairs[value.index].position;
+                    const studentPosVector = new Vector3(
+                        placeableChairPos.x + vrCamOffset.x,
+                        placeableChairPos.y + vrCamOffset.y,
+                        placeableChairPos.z + vrCamOffset.z
+                    );
+                    addStudent(mainScene, key, studentPosVector);
                 }
             }
 
@@ -150,16 +139,7 @@ function Classroom() {
                     myPosVector.y,
                     myPosVector.z
                 );
-                // mainScene.camera.position.set(
-                //     myPosVector.x,
-                //     myPosVector.y,
-                //     myPosVector.z
-                // );
-                testCube.position.set(
-                    myPosVector.x,
-                    myPosVector.y,
-                    myPosVector.z
-                );
+                testCube.position.set(myPos.x, myPos.y + 0.07, myPos.z);
             }
         }
 
@@ -180,6 +160,7 @@ function Classroom() {
         console.log("studentModelCount", studentModelCount);
     }, [totalStudents, studentPlacementData, mainScene]);
 
+    // ! Firebase Stuffs
     useEffect(() => {
         if (params?.session_code) {
             onValue(
