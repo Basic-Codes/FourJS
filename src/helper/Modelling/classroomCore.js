@@ -1,5 +1,8 @@
 import * as THREE from "three";
 import { Vector3 } from "three";
+import { TTFLoader } from "three/examples/jsm/loaders/TTFLoader";
+import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
+import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 import {
     ironTexture,
     tilesTexture,
@@ -146,7 +149,25 @@ export const addTable = (
     mainScene.scene.add(group);
 };
 
-export const addStudent = (mainScene, user_id, position) => {
+export const addText = (mainScene, text, position) => {
+    const fontLoader = new FontLoader();
+    const ttfLoader = new TTFLoader();
+    ttfLoader.load("/fonts/jet_brains_mono_regular.ttf", (json) => {
+        const jetBrainsFont = fontLoader.parse(json);
+        const textMesh = new THREE.Mesh(
+            new TextGeometry(text, {
+                height: 0.01,
+                size: 0.05,
+                font: jetBrainsFont,
+            }),
+            new THREE.MeshBasicMaterial({ color: "white" })
+        );
+        textMesh.position.set(position.x, position.y, position.z);
+        mainScene.scene.add(textMesh);
+    });
+};
+
+export const addStudent = (mainScene, position, user_id, name = "") => {
     const student = new THREE.Group();
     student.position.set(position.x, position.y, position.z);
     student.name = `student_${user_id}`;
@@ -157,6 +178,23 @@ export const addStudent = (mainScene, user_id, position) => {
     );
     studentBase.position.set(0, -0.25, 0);
     studentBase.receiveShadow = true;
+
+    // ! Adding Student Name
+    const fontLoader = new FontLoader();
+    const ttfLoader = new TTFLoader();
+    ttfLoader.load("/fonts/jet_brains_mono_regular.ttf", (json) => {
+        const jetBrainsFont = fontLoader.parse(json);
+        const nameMesh = new THREE.Mesh(
+            new TextGeometry(name, {
+                height: 0.01,
+                size: 0.05,
+                font: jetBrainsFont,
+            }),
+            new THREE.MeshBasicMaterial({ color: "white" })
+        );
+        nameMesh.position.set(-0.1, 0.2, 0);
+        student.add(nameMesh);
+    });
 
     student.add(studentBase);
     mainScene.scene.add(student);

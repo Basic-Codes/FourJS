@@ -15,6 +15,7 @@ import {
     addSpotLight,
     addStudent,
     addTable,
+    addText,
     makeRoom,
 } from "../../helper/Modelling/classroomCore";
 import { useParams } from "wouter";
@@ -99,20 +100,6 @@ function Classroom() {
     }, []);
 
     useEffect(() => {
-        // ! Adding Student
-        // if (totalStudents > 0) {
-        //     [...Array(totalStudents).keys()]?.map((i) => {
-        //         let studentModel = mainScene.scene.getObjectByName(
-        //             `student_${i}`
-        //         );
-        //         if (studentModel) {
-        //             console.log(`student_${i} already exist`);
-        //         } else {
-        //             addStudent(mainScene, `${i}`, chairs[i].position);
-        //         }
-        //     });
-        // }
-
         // ! Using Student Placement
         if (mainScene && studentPlacementData) {
             // ! Render All Students
@@ -130,7 +117,12 @@ function Classroom() {
                         placeableChairPos.z + vrCamOffset.z
                     );
                     if (key != params.student_id) {
-                        addStudent(mainScene, key, studentPosVector);
+                        addStudent(
+                            mainScene,
+                            studentPosVector,
+                            key,
+                            value.name
+                        );
                     }
                 }
             }
