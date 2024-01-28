@@ -41,6 +41,19 @@ io.on("connection", (socket) => {
     console.log("New client connected");
     sockets.add(socket);
 
+    socket.emit("me", socket.id);
+
+    socket.on("voice-chat-join", (roomId, userId) => {
+        socket.join(roomId);
+        // socket.to(roomId).broadcast.emit("user-connected", userId);
+        sendAll(socket, "user-connected", userId);
+
+        socket.on("disconnect", () => {
+            // socket.to(roomId).broadcast.emit("user-disconnected", userId);
+            sendAll(socket, "user-disconnected", userId);
+        });
+    });
+
     socket.on("disconnect", () => {
         console.log("Client disconnected");
     });

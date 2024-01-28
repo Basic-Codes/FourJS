@@ -10,6 +10,7 @@ import FirebaseTesting from "./components/TestComponents/FirebaseTesting";
 import Whiteboard from "./components/Classroom/Whiteboard";
 import Login from "./components/Dashboard/Login";
 import SignUp from "./components/Dashboard/Register";
+import VoiceChat from "./components/Classroom/VoiceChat";
 
 function App() {
     return (
@@ -37,6 +38,9 @@ function App() {
                 </Route>
                 <Route path="/session/:session_code/teacher">
                     <Whiteboard />
+                </Route>
+                <Route path="/voice-chat">
+                    <VoiceChat />
                 </Route>
                 <Route path="/users/:name">
                     {(params) => <div>Hello, {params.name}!</div>}
