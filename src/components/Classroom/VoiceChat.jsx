@@ -15,6 +15,10 @@ const VoiceChat = () => {
     const [socket, setSocket] = useState(null);
     const [stream, setStream] = useState();
 
+    // FIXME: Remove socketIO testing
+    const [testText, setTestText] = useState("");
+    const [receivedTestText, setReceivedTestText] = useState("");
+
     useEffect(() => {
         if (socket) {
             // const peer = new Peer(undefined, {
@@ -80,6 +84,24 @@ const VoiceChat = () => {
         return () => newSocket.close();
     }, [setSocket]);
 
+    // FIXME: Remove socketIO testing
+    useEffect(() => {
+        if (socket) {
+            socket.on("test-text", (data) => {
+                if (!data.self) {
+                    setReceivedTestText(data.data);
+                }
+            });
+        }
+    }, [socket]);
+
+    // FIXME: Remove socketIO testing
+    useEffect(() => {
+        if (socket) {
+            socket.emit("test-text", testText);
+        }
+    }, [testText]);
+
     return (
         <div>
             <div>Voice Chat</div>
@@ -87,6 +109,16 @@ const VoiceChat = () => {
             <audio ref={userAudio} autoPlay controls>
                 <source />
             </audio>
+
+            {/* FIXME: Remove socketIO testing */}
+            <input
+                className="border-2"
+                type="text"
+                onChange={(e) => setTestText(e.target.value)}
+            />
+            <div className="text-xl font-semibold text-emerald-500">
+                {receivedTestText}
+            </div>
         </div>
     );
 };

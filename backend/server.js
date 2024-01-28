@@ -58,6 +58,11 @@ io.on("connection", (socket) => {
         console.log("Client disconnected");
     });
 
+    // FIXME: Remove socketIO testing
+    socket.on("test-text", (data) => {
+        sendAll(socket, "test-text", data);
+    });
+
     socket.on("mousePos", (data) => {
         sendAll(socket, "mousePos", data);
     });
