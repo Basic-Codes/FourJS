@@ -13,24 +13,25 @@ import SignUp from "./components/Dashboard/Register";
 import VoiceChat from "./components/Classroom/VoiceChat";
 
 function App() {
-    return (
-        <div className="overflow-x-hidden">
-            {/* <MyBaseScene /> */}
+  return (
+    <div className="overflow-x-hidden">
+      {/* <MyBaseScene /> */}
 
-            {/* <TutBaseScene /> */}
+      {/* <TutBaseScene /> */}
 
-            {/* <WebXRTest /> */}
+      {/* <WebXRTest /> */}
 
-            {/* <CanvasDraw /> */}
+      {/* <CanvasDraw /> */}
 
-            {/* <Canvas2DOn3js /> */}
+      {/* <Canvas2DOn3js /> */}
 
-            {/* <FirebaseTesting /> */}
+      {/* <FirebaseTesting /> */}
 
-            {/* <Whiteboard /> */}
+      {/* <Whiteboard /> */}
 
-            {/* <Classroom /> */}
+      {/* <Classroom /> */}
 
+<<<<<<< HEAD
             <div>
                 <Route path="/">Hello</Route>
                 <Route path="/session/:session_code/student/:student_id">
@@ -51,6 +52,24 @@ function App() {
             </div>
         </div>
     );
+=======
+      <div>
+        <Route path="/">Hello</Route>
+        <Route path="/session/:session_code/student/:student_id">
+          <Classroom />
+        </Route>
+        <Route path="/session/:session_code/teacher">
+          <Whiteboard />
+        </Route>
+        <Route path="/users/:name">
+          {(params) => <div>Hello, {params.name}!</div>}
+        </Route>
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={SignUp} />
+      </div>
+    </div>
+  );
+>>>>>>> 2130778 (log in register works basic)
 }
 
 export default App;
