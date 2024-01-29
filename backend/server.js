@@ -55,7 +55,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("disconnect", () => {
-        console.log("Client disconnected");
+        console.log("Client Disconnected.");
     });
 
     // FIXME: Remove socketIO testing

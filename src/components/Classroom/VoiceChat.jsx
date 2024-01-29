@@ -21,39 +21,59 @@ const VoiceChat = () => {
 
     useEffect(() => {
         if (socket) {
-            // const peer = new Peer(undefined, {
-            //     host: "http://127.0.0.1",
-            //     port: "8080",
+            // const peer = new Peer(getParam("user_id"), {
+            //     host: "/",
+            //     port: "3002",
             // });
             const peer = new Peer(getParam("user_id"));
+            setTimeout(() => {
+                var conn = peer.connect("mobile-user");
+
+                conn.on("open", (id) => {
+                    conn.send("hi!");
+                });
+            }, 1000);
+
+            peer.on("connection", function (conn) {
+                conn.on("data", function (data) {
+                    // Will print 'hi!'
+                    console.log(data);
+                    alert(data);
+                });
+            });
 
             navigator.mediaDevices
                 .getUserMedia({ video: false, audio: true })
                 .then((stream) => {
-                    console.log(stream);
+                    // console.log(stream);
                     setStream(stream);
 
                     // if (userAudio?.current) {
                     //     userAudio.current.srcObject = stream;
                     // }
 
-                    peer.on("open", (id) => {
-                        console.log("peer open | peer id:", peer.id);
-                        socket.emit("voice-chat-join", "imaginary-room", id);
-                    });
+                    // peer.on("open", (id) => {
+                    //     peer.send("hi!");
+                    //     console.log("peer open | peer id:", peer.id);
+                    //     socket.emit("voice-chat-join", "imaginary-room", id);
+                    // });
                     peer.on("call", (call) => {
                         call.answer(stream);
-                        //// Handle audio stream
-                        call.on("stream", (userVideoStream) => {
+                        call.on("stream", (userStream) => {
+                            console.log("userStream", userStream);
                             if (userAudio?.current) {
-                                userAudio.current.srcObject = userVideoStream;
+                                userAudio.current.srcObject = userStream;
                             }
                         });
                     });
 
                     socket.on("user-connected", (userId) => {
                         console.log("A user has joined", userId);
-                        connectToNewUser(userId, stream);
+                        alert("A user has joined", userId);
+                        // connectToNewUser(userId, stream);
+                        setTimeout(() => {
+                            connectToNewUser(userId, stream);
+                        }, 5000);
                     });
                 });
 
@@ -67,7 +87,7 @@ const VoiceChat = () => {
                     }
                 });
 
-                // peers[userId] = call;
+                peers[userId] = call;
             }
 
             socket.on("me", (id) => {
