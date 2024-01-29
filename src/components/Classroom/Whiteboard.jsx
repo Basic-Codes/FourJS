@@ -104,6 +104,7 @@ function Whiteboard() {
                 className="absolute h-4 w-4 rounded-full"
             ></div>
 
+            {/* Left Toolba: Start */}
             <div
                 className="absolute lef-0 top-1/2 -translate-y-1/2
                         h-80 w-20 bg-white rounded-r-xl overflow-hidden
@@ -114,7 +115,7 @@ function Whiteboard() {
                     className="w-full grid place-items-center cursor-pointer"
                 >
                     {lineWidth == "8" && (
-                        <div className="absolute h-12 w-12 rounded-xl bg-[#a1a1a176]"></div>
+                        <div className="absolute h-12 w-12 rounded-xl bg-[#c1f0ff76]"></div>
                     )}
                     <div className="absolute h-8 w-8 rounded-full bg-black z-20"></div>
                 </div>
@@ -123,7 +124,7 @@ function Whiteboard() {
                     className="w-full grid place-items-center cursor-pointer"
                 >
                     {lineWidth == "4" && (
-                        <div className="absolute h-12 w-12 rounded-xl bg-[#a1a1a176]"></div>
+                        <div className="absolute h-12 w-12 rounded-xl bg-[#c1f0ff76]"></div>
                     )}
                     <div className="absolute h-4 w-4 rounded-full bg-black"></div>
                 </div>
@@ -132,7 +133,7 @@ function Whiteboard() {
                     className="w-full grid place-items-center cursor-pointer"
                 >
                     {lineWidth == "2" && (
-                        <div className="absolute h-12 w-12 rounded-xl bg-[#a1a1a176]"></div>
+                        <div className="absolute h-12 w-12 rounded-xl bg-[#c1f0ff76]"></div>
                     )}
                     <div className="absolute h-2 w-2 rounded-full bg-black"></div>
                 </div>
@@ -154,6 +155,7 @@ function Whiteboard() {
                     />
                 </div>
             </div>
+            {/* Left Toolba: End */}
 
             <div className="grid place-items-center min-h-screen min-w-screen bg-vr-white bg-i1">
                 <canvas
