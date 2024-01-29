@@ -11,6 +11,7 @@ import Whiteboard from "./components/Classroom/Whiteboard";
 import Login from "./components/Dashboard/Login";
 import SignUp from "./components/Dashboard/Register";
 import VoiceChat from "./components/Classroom/VoiceChat";
+import SessionChecker from "./components/Classroom/sessionChecker";
 
 function App() {
     return (
@@ -34,7 +35,7 @@ function App() {
             <div>
                 <Route path="/">Hello</Route>
                 <Route path="/session/:session_code/student/:student_id">
-                    <Classroom />
+                    <SessionChecker />
                 </Route>
                 <Route path="/session/:session_code/teacher">
                     <Whiteboard />

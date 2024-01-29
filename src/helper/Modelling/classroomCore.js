@@ -187,14 +187,23 @@ export const addText = (mainScene, text, position) => {
     });
 };
 
-export const addStudent = (mainScene, position, user_id, name = "") => {
+export const addStudent = (
+    mainScene,
+    position,
+    user_id,
+    name = "",
+    hideModel,
+    isSelfModel = false
+) => {
     const student = new THREE.Group();
     student.position.set(position.x, position.y, position.z);
     student.name = `student_${user_id}`;
 
     const studentBase = new THREE.Mesh(
         new THREE.BoxGeometry(0.2, 0.4, 0.2),
-        new THREE.MeshPhongMaterial({ color: "#f26b6b" })
+        new THREE.MeshPhongMaterial({
+            color: isSelfModel ? "#4be586" : "#f26b6b",
+        })
     );
     studentBase.position.set(0, -0.25, 0);
     studentBase.receiveShadow = true;
@@ -217,6 +226,7 @@ export const addStudent = (mainScene, position, user_id, name = "") => {
     });
 
     student.add(studentBase);
+    student.visible = !hideModel;
     mainScene.scene.add(student);
 
     return student;

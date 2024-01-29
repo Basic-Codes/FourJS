@@ -34,7 +34,6 @@ function Classroom() {
     const testCubeRef = useRef(null);
     const testCube = testCubeRef.current;
 
-    const [totalStudents, setTotalStudents] = useState(0);
     const [studentPlacementData, setStudentPlacementData] = useState(null);
 
     const update3DWhiteboard = (texture) => {
@@ -89,7 +88,7 @@ function Classroom() {
                     `student_${key}`
                 );
                 if (studentModel) {
-                    console.log(`student_${key} already exist`);
+                    console.log(`student_${key} model already exist`);
                 } else {
                     const placeableChairPos = chairsData[value.index].position;
                     const studentPosVector = new Vector3(
@@ -97,14 +96,14 @@ function Classroom() {
                         placeableChairPos.y + vrCamOffset.y,
                         placeableChairPos.z + vrCamOffset.z
                     );
-                    if (key != params.student_id) {
-                        addStudent(
-                            mainScene,
-                            studentPosVector,
-                            key,
-                            value.name
-                        );
-                    }
+                    addStudent(
+                        mainScene,
+                        studentPosVector,
+                        key,
+                        value.name,
+                        key == params.student_id && !hasParam("isTesting"),
+                        key == params.student_id
+                    );
                 }
             }
 
@@ -143,22 +142,11 @@ function Classroom() {
                 }
             });
         }
-    }, [totalStudents, studentPlacementData, mainScene]);
+    }, [studentPlacementData, mainScene]);
 
     // ! Firebase Stuffs
     useEffect(() => {
         if (params?.session_code) {
-            onValue(
-                ref(
-                    db,
-                    `vr-classroom/session/${params?.session_code}/total-students`
-                ),
-                async (snapshot) => {
-                    const data = snapshot.val();
-                    setTotalStudents(data);
-                }
-            );
-
             onValue(
                 ref(
                     db,
@@ -171,11 +159,6 @@ function Classroom() {
             );
         }
     }, []);
-
-    // ! Testing
-    useEffect(() => {
-        setTimeout(() => {}, 4_000);
-    }, [mainScene]);
 
     return (
         <div>
