@@ -1,5 +1,10 @@
-@host = http://localhost:8080
+# @host = http://localhost:8080
+@host = http://192.168.68.204:8080
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjViM2VjNzkxZTQ0NGZkMzFkNTZhMWIyIiwiaWF0IjoxNzA2MjkwMzAzLCJleHAiOjE3MDYzMjYzMDN9.k31bXRihL5iGg86gNVlP7bcvJKwRtCitp63ZQCpV7m8
+
+### ! /
+GET {{host}} HTTP/1.1
+
 
 ### ! Get User
 GET {{host}}/api/login HTTP/1.1

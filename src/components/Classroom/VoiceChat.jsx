@@ -41,10 +41,15 @@ const VoiceChat = () => {
                         console.log("peer open | peer id:", peer.id);
                         socket.emit("voice-chat-join", "imaginary-room", id);
                     });
-                    // peer.on("call", (call) => {
-                    //     call.answer(stream);
-                    //     // Handle audio stream
-                    // });
+                    peer.on("call", (call) => {
+                        call.answer(stream);
+                        //// Handle audio stream
+                        call.on("stream", (userVideoStream) => {
+                            if (userAudio?.current) {
+                                userAudio.current.srcObject = userVideoStream;
+                            }
+                        });
+                    });
 
                     socket.on("user-connected", (userId) => {
                         console.log("A user has joined", userId);
@@ -55,9 +60,10 @@ const VoiceChat = () => {
             function connectToNewUser(userId, stream) {
                 const call = peer.call(userId, stream);
 
-                call.on("stream", (userVideoStream) => {
+                call.on("stream", (otherStream) => {
+                    console.log("otherStream", otherStream);
                     if (userAudio?.current) {
-                        userAudio.current.srcObject = userVideoStream;
+                        userAudio.current.srcObject = otherStream;
                     }
                 });
 
