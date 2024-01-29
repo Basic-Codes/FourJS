@@ -2,7 +2,7 @@ import { Link } from "wouter";
 
 const AuthLayout = ({ children, title }) => {
     return (
-        <div className="bg-[#f8faff] min-h-screen w-screen grid place-items-center py-0 sm:py-10 bg-i1">
+        <div className="bg-[#f8faff] min-h-screen w-screen grid place-items-center py-0 sm:py-10">
             <div className="bg-white rounded shadow p-10 sm:w-96 min-h-screen sm:min-h-fit">
                 <div className="font-black font-jetbrains text-2xl mb-5 text-center">
                     {title}
