@@ -20,13 +20,12 @@ const PptControl = () => {
                 e = e || window.event;
 
                 if (e.keyCode == "37" || e.keyCode == "38") {
-                    console.log(currImageIndex % images?.length);
-                    setCurrImageIndex(
-                        (currImageIndex) =>
-                            (currImageIndex - 1) % images?.length
+                    setCurrImageIndex((currImageIndex) =>
+                        (currImageIndex - 1) % images?.length < 0
+                            ? images?.length - 1
+                            : (currImageIndex - 1) % images?.length
                     );
                 } else if (e.keyCode == "40" || e.keyCode == "39") {
-                    console.log("down arrow");
                     setCurrImageIndex(
                         (currImageIndex) =>
                             (currImageIndex + 1) % images?.length
@@ -35,6 +34,10 @@ const PptControl = () => {
             }
         };
     }, []);
+
+    useEffect(() => {
+        console.log(currImageIndex);
+    }, [currImageIndex]);
 
     return (
         <div className="">
