@@ -1,12 +1,9 @@
 import { Vector3 } from "three";
 
-<<<<<<< HEAD
 // export const SOCKET_SERVER_URL = "http://localhost:8080";
 export const SOCKET_SERVER_URL = "http://192.168.0.101:8080/";
-=======
-export const SOCKET_SERVER_URL = "http://localhost:8080";
 export const BACKEND_URL = "http://localhost:8080";
->>>>>>> 2130778 (log in register works basic)
+
 export const vrCamOffset = { x: 0, y: 0.3, z: -0.7 };
 export const chairsData = [
   // First Row

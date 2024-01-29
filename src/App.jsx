@@ -31,28 +31,6 @@ function App() {
 
       {/* <Classroom /> */}
 
-<<<<<<< HEAD
-            <div>
-                <Route path="/">Hello</Route>
-                <Route path="/session/:session_code/student/:student_id">
-                    <Classroom />
-                </Route>
-                <Route path="/session/:session_code/teacher">
-                    <Whiteboard />
-                </Route>
-                <Route path="/voice-chat">
-                    <VoiceChat />
-                </Route>
-                <Route path="/users/:name">
-                    {(params) => <div>Hello, {params.name}!</div>}
-                </Route>
-                <Route path="/login" component={Login} />
-                <Route path="/signup" component={SignUp} />
-                <Route path="/signup" component={SignUp} />
-            </div>
-        </div>
-    );
-=======
       <div>
         <Route path="/">Hello</Route>
         <Route path="/session/:session_code/student/:student_id">
@@ -60,6 +38,9 @@ function App() {
         </Route>
         <Route path="/session/:session_code/teacher">
           <Whiteboard />
+        </Route>
+        <Route path="/voice-chat">
+          <VoiceChat />
         </Route>
         <Route path="/users/:name">
           {(params) => <div>Hello, {params.name}!</div>}
@@ -69,7 +50,6 @@ function App() {
       </div>
     </div>
   );
->>>>>>> 2130778 (log in register works basic)
 }
 
 export default App;
