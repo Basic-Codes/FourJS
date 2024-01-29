@@ -9,7 +9,8 @@ import { useQueryParams } from "react-use-query-params";
 const VoiceChat = () => {
     const { getParam } = useQueryParams();
 
-    const userAudio = useRef();
+    const userAudioRef = useRef();
+    const userAudio = userAudioRef.current;
 
     const [me, setMe] = useState("");
     const [socket, setSocket] = useState(null);
@@ -21,14 +22,10 @@ const VoiceChat = () => {
 
     useEffect(() => {
         if (socket) {
-            // const peer = new Peer(getParam("user_id"), {
-            //     host: "/",
-            //     port: "3002",
-            // });
             const peer = new Peer(getParam("user_id"));
-            setTimeout(() => {
-                var conn = peer.connect("mobile-user");
 
+            setTimeout(() => {
+                var conn = peer.connect("mobile_user");
                 conn.on("open", (id) => {
                     conn.send("hi!");
                 });
@@ -36,7 +33,6 @@ const VoiceChat = () => {
 
             peer.on("connection", function (conn) {
                 conn.on("data", function (data) {
-                    // Will print 'hi!'
                     console.log(data);
                     alert(data);
                 });
@@ -48,46 +44,47 @@ const VoiceChat = () => {
                     // console.log(stream);
                     setStream(stream);
 
-                    // if (userAudio?.current) {
-                    //     userAudio.current.srcObject = stream;
+                    // if (userAudio) {
+                    //     userAudio.srcObject = stream;
                     // }
 
-                    // peer.on("open", (id) => {
-                    //     peer.send("hi!");
-                    //     console.log("peer open | peer id:", peer.id);
-                    //     socket.emit("voice-chat-join", "imaginary-room", id);
-                    // });
+                    peer.on("open", (id) => {
+                        console.log("peer open | peer id:", peer.id);
+                        socket.emit("voice-chat-join", "imaginary-room", id);
+                    });
                     peer.on("call", (call) => {
                         call.answer(stream);
                         call.on("stream", (userStream) => {
                             console.log("userStream", userStream);
-                            if (userAudio?.current) {
-                                userAudio.current.srcObject = userStream;
+                            if (userAudioRef?.current) {
+                                userAudioRef.current.srcObject = userStream;
                             }
                         });
                     });
 
-                    socket.on("user-connected", (userId) => {
-                        console.log("A user has joined", userId);
-                        alert("A user has joined", userId);
-                        // connectToNewUser(userId, stream);
+                    socket.on("user-connected", (data) => {
+                        console.log("A user has joined", data);
+
                         setTimeout(() => {
-                            connectToNewUser(userId, stream);
-                        }, 5000);
+                            if (!data.self) {
+                                connectToNewUser(data.data, stream);
+                            }
+                        }, 1000);
                     });
                 });
 
             function connectToNewUser(userId, stream) {
+                console.log("Calling ", userId);
                 const call = peer.call(userId, stream);
 
                 call.on("stream", (otherStream) => {
                     console.log("otherStream", otherStream);
-                    if (userAudio?.current) {
-                        userAudio.current.srcObject = otherStream;
+                    if (userAudio) {
+                        userAudio.srcObject = otherStream;
                     }
                 });
 
-                peers[userId] = call;
+                // peers[userId] = call;
             }
 
             socket.on("me", (id) => {
@@ -131,8 +128,8 @@ const VoiceChat = () => {
     return (
         <div>
             <div>Voice Chat</div>
-            {/* <audio ref={userAudio} autoPlay></audio> */}
-            <audio ref={userAudio} autoPlay controls>
+            {/* <audio ref={userAudioRef} autoPlay></audio> */}
+            <audio ref={userAudioRef} autoPlay controls>
                 <source />
             </audio>
 

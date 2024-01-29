@@ -13,43 +13,47 @@ import SignUp from "./components/Dashboard/Register";
 import VoiceChat from "./components/Classroom/VoiceChat";
 
 function App() {
-  return (
-    <div className="overflow-x-hidden">
-      {/* <MyBaseScene /> */}
+    return (
+        <div className="overflow-x-hidden">
+            {/* <MyBaseScene /> */}
 
-      {/* <TutBaseScene /> */}
+            {/* <TutBaseScene /> */}
 
-      {/* <WebXRTest /> */}
+            {/* <WebXRTest /> */}
 
-      {/* <CanvasDraw /> */}
+            {/* <CanvasDraw /> */}
 
-      {/* <Canvas2DOn3js /> */}
+            {/* <Canvas2DOn3js /> */}
 
-      {/* <FirebaseTesting /> */}
+            {/* <FirebaseTesting /> */}
 
-      {/* <Whiteboard /> */}
+            {/* <Whiteboard /> */}
 
-      {/* <Classroom /> */}
+            {/* <Classroom /> */}
 
-      <div>
-        <Route path="/">Hello</Route>
-        <Route path="/session/:session_code/student/:student_id">
-          <Classroom />
-        </Route>
-        <Route path="/session/:session_code/teacher">
-          <Whiteboard />
-        </Route>
-        <Route path="/voice-chat">
-          <VoiceChat />
-        </Route>
-        <Route path="/users/:name">
-          {(params) => <div>Hello, {params.name}!</div>}
-        </Route>
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={SignUp} />
-      </div>
-    </div>
-  );
+            <div>
+                <Route path="/">Hello</Route>
+                <Route path="/session/:session_code/student/:student_id">
+                    <Classroom />
+                </Route>
+                <Route path="/session/:session_code/teacher">
+                    <Whiteboard />
+                </Route>
+                <Route path="/voice-chat">
+                    <VoiceChat />
+                </Route>
+                <Route path="/users/:name">
+                    {(params) => <div>Hello, {params.name}!</div>}
+                </Route>
+                <Route path="/login" component={Login} />
+                <Route path="/signup" component={SignUp} />
+            </div>
+        </div>
+    );
 }
 
 export default App;
+
+// ! http://192.168.0.101:5173/session/my-code/student/testing?isTesting
+// ! http://192.168.0.101:5173/session/my-code/teacher
+// ! http://192.168.0.100:5173/voice-chat?user_id=pc_user
