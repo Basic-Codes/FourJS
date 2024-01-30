@@ -17,9 +17,48 @@ function generateRandomCode(length = 6) {
     return code;
 }
 
-// @ Authenticate User & Get Token | POST api/login
+ROUT.get("/get", auth_middleware, async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.user).select("-password");
+
+        let classrooms = null;
+
+        if (user?.isTeacher) {
+            classrooms = await ClassroomModel.find({ teacherId: req.user });
+            classrooms = classrooms?.map((item) => {
+                return {
+                    classroom: item,
+                    teacher: user,
+                };
+            });
+        } else {
+            // NOTE: Bad Code
+            classrooms = await ClassroomModel.find();
+            classrooms = await Promise.all(
+                classrooms?.map(async (item) => {
+                    const teacher = await UserModel.findById(
+                        item.teacherId
+                    ).select("-password");
+
+                    return {
+                        classroom: item,
+                        teacher: teacher,
+                    };
+                })
+            );
+        }
+
+        res.json({
+            classrooms,
+        });
+    } catch (err) {
+        console.log(err.message);
+        res.status(400).send("ERROR", err.message);
+    }
+});
+
 ROUT.post(
-    "/",
+    "/add",
     [auth_middleware, [check("name", "Name can't be empty.").exists()]],
     async (req, res) => {
         const errors = validationResult(req);
@@ -50,7 +89,7 @@ ROUT.post(
             });
         } catch (err) {
             console.log(err.message);
-            res.status(500).send("error", err.message);
+            res.status(500).send("ERROR", err.message);
         }
     }
 );

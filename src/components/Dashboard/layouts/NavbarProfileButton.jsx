@@ -1,12 +1,18 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { useStore } from "@nanostores/react";
-import { $user } from "../../../stores/user";
+import { $user, setUser } from "../../../stores/user";
+import { useLocation } from "wouter";
 
 const NavbarProfileButton = () => {
+    const [location, setLocation] = useLocation();
     const user = useStore($user);
 
-    const Logout = () => {};
+    const Logout = () => {
+        localStorage.removeItem("vr_token");
+        setUser(null);
+        setLocation("/login");
+    };
 
     return (
         <Menu as="div" className="relative inline-block text-left">
@@ -41,7 +47,7 @@ const NavbarProfileButton = () => {
                             {({ active }) => (
                                 <div
                                     onClick={Logout}
-                                    className={`cursor-pointer block mx-3 my-2 px-2 py-1.5 text-sm base-btn gray-btn text-gray-500 text-center`}
+                                    className={`cursor-pointer block mx-3 my-2 px-2 py-1.5 text-sm base-btn gray-btn text-gray-500 hover:bg-gray-100 text-center`}
                                 >
                                     Log Out
                                 </div>

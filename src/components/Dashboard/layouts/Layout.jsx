@@ -6,6 +6,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../../../helper/staticVars";
 import { useEffect } from "react";
 import { useLocation } from "wouter";
+import { getAxiosHeader } from "../../../helper/utils";
 
 const Layout = ({ children }) => {
     const [location, setLocation] = useLocation();
@@ -14,16 +15,9 @@ const Layout = ({ children }) => {
 
     useEffect(() => {
         if (user == null) {
-            const token = localStorage.getItem("vr_token");
-
-            const headers = {
-                "Content-Type": "application/json",
-                "x-auth-token": token,
-            };
-
             axios
                 .get(`${BACKEND_URL}/api/login`, {
-                    headers: headers,
+                    headers: getAxiosHeader(),
                 })
                 .then(function (response) {
                     if (response?.data?.user) {

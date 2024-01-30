@@ -21,7 +21,7 @@ ROUT.get("/", auth_middleware, async (req, res) => {
         });
     } catch (err) {
         console.log(err.message);
-        res.status(500).send("route/api/Login.js | Get ERROR.");
+        res.status(500).send("ERROR", err.message);
     }
 });
 
@@ -86,7 +86,7 @@ ROUT.post(
             );
         } catch (err) {
             console.log(err.message);
-            res.status(500).send("catch | Server error | @Login | JWT");
+            res.status(500).send("ERROR", err.message);
         }
     }
 );

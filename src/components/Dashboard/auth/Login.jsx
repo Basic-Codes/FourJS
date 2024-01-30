@@ -52,7 +52,7 @@ const Login = () => {
             <div className="">
                 <div className="font-bold mb-2">Password</div>
                 <input
-                    type="text"
+                    type="password"
                     className="px-3 py-2 text-base outline-none border border-gray-400 rounded w-full placeholder:text-sm"
                     placeholder="Enter password.."
                     onChange={onChange}

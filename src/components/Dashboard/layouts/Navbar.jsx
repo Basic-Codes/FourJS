@@ -3,9 +3,50 @@ import { useStore } from "@nanostores/react";
 import { $user } from "../../../stores/user";
 import NavbarProfileButton from "./NavbarProfileButton";
 import { FiPlus } from "react-icons/fi";
+import Add_Join_Modal from "./Add_Join_Modal";
+import { useState } from "react";
+import { BACKEND_URL } from "../../../helper/staticVars";
+import axios from "axios";
+import { getAxiosHeader } from "../../../helper/utils";
 
 const Navbar = () => {
+    let [isOpen, setIsOpen] = useState(false);
+    let [name_or_code, setNameOrCode] = useState(false); // This cound be name or code
+
     const user = useStore($user);
+
+    const onSubmit = () => {
+        if (user) {
+            const data = user?.isTeacher
+                ? {
+                      name: name_or_code,
+                  }
+                : {
+                      code: name_or_code,
+                  };
+
+            const url = user?.isTeacher
+                ? `${BACKEND_URL}/api/classroom/add`
+                : `${BACKEND_URL}/api/classroom/join`;
+
+            axios
+                .post(url, data, {
+                    headers: getAxiosHeader(),
+                })
+                .then(function (response) {
+                    if (response?.data?.classroom) {
+                        setIsOpen(false);
+                    } else {
+                        console.error(response?.data?.msg);
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    setLocation("/login");
+                });
+        }
+    };
+
     return (
         <div className="fixed w-full bg-white border-2 py-2">
             <div className="flex justify-between items-center max-w-screen-2xl mx-auto px-5 md:px-10">
@@ -22,9 +63,39 @@ const Navbar = () => {
                     </p>
                 </div>
                 <div className="flex items-center space-x-4">
-                    <div className="p-2 rounded-full hover:bg-gray-100 cursor-pointer">
+                    <div
+                        onClick={() => setIsOpen(true)}
+                        className="p-2 rounded-full hover:bg-gray-100 cursor-pointer"
+                    >
                         <FiPlus className="text-2xl" />
                     </div>
+                    <Add_Join_Modal
+                        title={
+                            user?.isTeacher
+                                ? "Create Classroom"
+                                : "Join Classroom"
+                        }
+                        isOpen={isOpen}
+                        setIsOpen={setIsOpen}
+                        onSubmit={onSubmit}
+                    >
+                        <div>
+                            <div className="mb-2 mt-5">
+                                <input
+                                    type="text"
+                                    className="px-3 py-2 text-base outline-none border border-gray-400 rounded w-full placeholder:text-sm"
+                                    placeholder={
+                                        user?.isTeacher
+                                            ? "Enter class name"
+                                            : "Enter classroom code"
+                                    }
+                                    onChange={(e) =>
+                                        setNameOrCode(e.target.value)
+                                    }
+                                />
+                            </div>
+                        </div>
+                    </Add_Join_Modal>
 
                     <div className="font-semibold">
                         <p className="capitalize text-sm md:text-lg">
