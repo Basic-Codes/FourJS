@@ -3,6 +3,7 @@ import AuthLayout from "./AuthLayout";
 import { useState } from "react";
 import { BACKEND_URL } from "../../helper/staticVars";
 import axios from "axios";
+import { setUser } from "../../stores/user";
 
 const Login = () => {
   const [location, setLocation] = useLocation();
@@ -17,6 +18,8 @@ const Login = () => {
       .post(`${BACKEND_URL}/api/login`, data)
       .then(function (response) {
         if (response.data.token) {
+          setUser("A NEW USER");
+
           localStorage.setItem("vr_token", response.data.token);
 
           setLocation("/");

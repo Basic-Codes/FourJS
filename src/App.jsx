@@ -11,8 +11,12 @@ import Whiteboard from "./components/Classroom/Whiteboard";
 import Login from "./components/Dashboard/Login";
 import SignUp from "./components/Dashboard/Register";
 import VoiceChat from "./components/Classroom/VoiceChat";
+<<<<<<< HEAD
 import SessionChecker from "./components/Classroom/sessionChecker";
 import TeacherPanel from "./components/Classroom/TeacherPanel";
+=======
+import Home from "./components/Dashboard/home/Home";
+>>>>>>> adc6c2d (before pull)
 
 function App() {
     return (
@@ -33,25 +37,27 @@ function App() {
 
             {/* <Classroom /> */}
 
-            <div>
-                <Route path="/">Hello</Route>
-                <Route path="/session/:session_code/student/:student_id">
-                    <SessionChecker />
-                </Route>
-                <Route path="/session/:session_code/teacher">
-                    <TeacherPanel />
-                </Route>
-                <Route path="/voice-chat">
-                    <VoiceChat />
-                </Route>
-                <Route path="/users/:name">
-                    {(params) => <div>Hello, {params.name}!</div>}
-                </Route>
-                <Route path="/login" component={Login} />
-                <Route path="/signup" component={SignUp} />
-            </div>
-        </div>
-    );
+      <div>
+        <Route path="/">
+          <Home />
+        </Route>
+        <Route path="/session/:session_code/student/:student_id">
+          <Classroom />
+        </Route>
+        <Route path="/session/:session_code/teacher">
+          <Whiteboard />
+        </Route>
+        <Route path="/voice-chat">
+          <VoiceChat />
+        </Route>
+        <Route path="/users/:name">
+          {(params) => <div>Hello, {params.name}!</div>}
+        </Route>
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={SignUp} />
+      </div>
+    </div>
+  );
 }
 
 export default App;
