@@ -2,9 +2,33 @@ import { useState } from "react";
 import PptControl from "./PptControl";
 import Whiteboard from "./Whiteboard";
 import { useEffect } from "react";
+import { ref, onValue, set } from "firebase/database";
+import { db } from "../../helper/firebase";
+import { useParams } from "wouter";
 
 const TeacherPanel = () => {
-    const [currState, setCurrState] = useState("slide");
+    const params = useParams();
+
+    const [currState, setCurrState] = useState("whiteboard");
+    const [currPptImgUrl, setCurrPptImgUrl] = useState(null);
+
+    // ! Firebase Stuffs
+    useEffect(() => {
+        if (params?.session_code) {
+            const data = {
+                teachingMode: currState,
+                currPptImgUrl: currPptImgUrl,
+            };
+
+            set(
+                ref(
+                    db,
+                    `vr-classroom/session/${params?.session_code}/settings`
+                ),
+                data
+            );
+        }
+    }, [currState, currPptImgUrl]);
 
     return (
         <div>
@@ -24,7 +48,11 @@ const TeacherPanel = () => {
                     </button>
                 )}
             </div>
-            {currState == "whiteboard" ? <Whiteboard /> : <PptControl />}
+            {currState == "whiteboard" ? (
+                <Whiteboard />
+            ) : (
+                <PptControl setCurrPptImgUrl={setCurrPptImgUrl} />
+            )}
         </div>
     );
 };

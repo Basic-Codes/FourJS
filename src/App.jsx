@@ -17,48 +17,45 @@ import Login from "./components/Dashboard/auth/Login";
 import SingleClass from "./components/Dashboard/SingleClass/SingleClass";
 
 function App() {
-  return (
-    <div className="overflow-x-hidden">
-      {/* <MyBaseScene /> */}
+    return (
+        <div className="overflow-x-hidden">
+            {/* <MyBaseScene /> */}
 
-      {/* <TutBaseScene /> */}
+            {/* <TutBaseScene /> */}
 
-      {/* <WebXRTest /> */}
+            {/* <WebXRTest /> */}
 
-      {/* <CanvasDraw /> */}
+            {/* <CanvasDraw /> */}
 
-      {/* <Canvas2DOn3js /> */}
+            {/* <Canvas2DOn3js /> */}
 
-      {/* <FirebaseTesting /> */}
+            {/* <FirebaseTesting /> */}
 
-      {/* <Whiteboard /> */}
+            {/* <Whiteboard /> */}
 
-      {/* <Classroom /> */}
+            {/* <Classroom /> */}
 
-      <div>
-        <Route path="/">
-          <Home />
-        </Route>
-        <Route path="/class/:class_id">
-          <SingleClass />
-        </Route>
-        <Route path="/session/:session_code/student/:student_id">
-          <SessionChecker />
-        </Route>
-        <Route path="/session/:session_code/teacher">
-          <Whiteboard />
-        </Route>
-        <Route path="/voice-chat">
-          <VoiceChat />
-        </Route>
-        <Route path="/users/:name">
-          {(params) => <div>Hello, {params.name}!</div>}
-        </Route>
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={SignUp} />
-      </div>
-    </div>
-  );
+            <div>
+                <Route path="/">
+                    <Home />
+                </Route>
+                <Route path="/session/:session_code/student/:student_id">
+                    <SessionChecker />
+                </Route>
+                <Route path="/session/:session_code/teacher">
+                    <TeacherPanel />
+                </Route>
+                <Route path="/voice-chat">
+                    <VoiceChat />
+                </Route>
+                <Route path="/users/:name">
+                    {(params) => <div>Hello, {params.name}!</div>}
+                </Route>
+                <Route path="/login" component={Login} />
+                <Route path="/signup" component={SignUp} />
+            </div>
+        </div>
+    );
 }
 
 export default App;

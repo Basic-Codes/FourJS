@@ -1,17 +1,18 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { BACKEND_URL } from "../../helper/staticVars";
 
 const xOffset = 600;
 const yOffset = 100;
 
-const PptControl = () => {
+const PptControl = ({ setCurrPptImgUrl }) => {
     const [currImageIndex, setCurrImageIndex] = useState(0);
     const [images, setImages] = useState([
-        "https://images.pexels.com/photos/443446/pexels-photo-443446.jpeg?cs=srgb&dl=pexels-eberhard-grossgasteiger-443446.jpg&fm=jpg",
-        "https://c4.wallpaperflare.com/wallpaper/362/276/920/nature-4k-pc-full-hd-wallpaper-preview.jpg",
-        "https://t4.ftcdn.net/jpg/05/71/06/03/360_F_571060336_lRFo9ZoUUYDzcKb6dHKMs8unl2TM98rr.jpg",
-        "https://wallpapers.com/images/hd/hd-white-tree-in-woods-2p5890rh2o8ho1tk.jpg",
-        "https://c4.wallpaperflare.com/wallpaper/458/251/742/katherine-langford-pc-desktop-hd-wallpaper-preview.jpg",
+        `${BACKEND_URL}/images/image_01.jpg`,
+        `${BACKEND_URL}/images/image_02.jpg`,
+        `${BACKEND_URL}/images/image_03.jpg`,
+        `${BACKEND_URL}/images/image_04.jpg`,
+        `${BACKEND_URL}/images/image_05.jpg`,
     ]);
 
     useEffect(() => {
@@ -36,7 +37,7 @@ const PptControl = () => {
     }, []);
 
     useEffect(() => {
-        console.log(currImageIndex);
+        setCurrPptImgUrl(images[currImageIndex]);
     }, [currImageIndex]);
 
     return (

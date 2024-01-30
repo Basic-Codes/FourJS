@@ -22,6 +22,7 @@ import {
 import { useParams } from "wouter";
 import { useQueryParams } from "react-use-query-params";
 import FakeWhiteboard from "./FakeWhiteboard";
+import { useCallback } from "react";
 
 function Classroom() {
     const params = useParams();
@@ -35,15 +36,62 @@ function Classroom() {
     const testCube = testCubeRef.current;
 
     const [studentPlacementData, setStudentPlacementData] = useState(null);
+    const [sessionSettings, setSessionSettings] = useState(null);
 
     const update3DWhiteboard = (texture) => {
         if (whiteBoardRef?.current) {
-            const updatedMat = new THREE.MeshPhongMaterial({ map: texture });
+            const updatedMat = new THREE.MeshPhongMaterial({
+                map: texture,
+            });
             whiteBoardRef.current.material = updatedMat;
         } else {
             console.log("Whiteboard Not Found");
         }
     };
+    const updatePptOnWhiteboard = (pptImage) => {
+        console.log("PPPPPPPPPPPPPPPPP", pptImage);
+        if (whiteBoardRef?.current) {
+            // const loader = new THREE.TextureLoader();
+            // const texture = loader.load(pptImage, () => {
+            //     mainScene.renderer.render(scene, camera);
+            //     whiteBoardRef.current.material = updatedMat;
+            // });
+            const loader = new THREE.TextureLoader();
+            loader.crossOrigin = "Anonymous";
+            const texture = loader.load(pptImage);
+            const updatedMat = new THREE.MeshPhongMaterial({
+                map: texture,
+            });
+            whiteBoardRef.current.material = updatedMat;
+        } else {
+            console.log("Whiteboard Not Found");
+        }
+    };
+    // const update3DWhiteboard = useCallback(
+    //     (texture) => {
+    //         if (whiteBoardRef?.current && sessionSettings) {
+    //             console.log(sessionSettings["teachingMode"]);
+    //             if (sessionSettings?.teachingMode == "slide") {
+    //                 const loader = new THREE.TextureLoader();
+    //                 texture = loader.load(
+    //                     sessionSettings?.currPptImgUrl,
+    //                     () => {
+    //                         renderer.render(scene, camera);
+    //                         whiteBoardRef.current.material = updatedMat;
+    //                     }
+    //                 );
+    //             } else if (sessionSettings?.teachingMode == "whiteboard") {
+    //                 const updatedMat = new THREE.MeshPhongMaterial({
+    //                     map: texture,
+    //                 });
+    //                 whiteBoardRef.current.material = updatedMat;
+    //             }
+    //         } else {
+    //             console.log("Whiteboard Not Found");
+    //         }
+    //     },
+    //     [whiteBoardRef, sessionSettings]
+    // );
 
     useEffect(() => {
         const mainScene = new SceneInit("myThreeJsCanvas");
@@ -159,6 +207,26 @@ function Classroom() {
             );
         }
     }, []);
+    // ! Firebase Stuffs
+    useEffect(() => {
+        if (params?.session_code) {
+            onValue(
+                ref(
+                    db,
+                    `vr-classroom/session/${params?.session_code}/settings`
+                ),
+                async (snapshot) => {
+                    const data = snapshot.val();
+                    updatePptOnWhiteboard(data.currPptImgUrl);
+                    setSessionSettings(data);
+                }
+            );
+        }
+    }, []);
+
+    useEffect(() => {
+        console.log("sessionSettings", sessionSettings);
+    }, [sessionSettings]);
 
     return (
         <div>

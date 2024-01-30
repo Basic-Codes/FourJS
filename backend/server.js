@@ -2,19 +2,23 @@ const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
 const cors = require("cors");
+const path = require("path");
 const connectDB = require("./Database/MongoConnect");
 require("dotenv").config();
 
 const app = express();
+app.use(cors());
 connectDB();
 app.use(express.json({ extended: false }));
+
+// app.use("/public", express.static(path.join(__dirname, "public")));
+app.use(express.static("public"));
 
 const corsOpts = {
     origin: "*",
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
 };
-app.use(cors(corsOpts));
 
 const server = http.createServer(app);
 const io = socketIo(server, {
