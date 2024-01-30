@@ -21,6 +21,40 @@ ROUT.get("/get", auth_middleware, async (req, res) => {
     try {
         const user = await UserModel.findById(req.user).select("-password");
 
+        if (!req.query.code) {
+            return res
+                .status(400)
+                .json({ msg: "classroom code is empty", X: req.query });
+        }
+
+        const classroom = await ClassroomModel.findOne({
+            code: req.query.code,
+        });
+
+        if (!classroom) {
+            return res
+                .status(400)
+                .json({ msg: "Invalid classroom code.", X: req.query });
+        }
+
+        const teacher = await UserModel.findById(classroom.teacherId).select(
+            "-password"
+        );
+
+        res.json({
+            classroom,
+            teacher,
+        });
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+ROUT.get("/list", auth_middleware, async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.user).select("-password");
+
         let classrooms = null;
 
         if (user?.isTeacher) {
@@ -56,7 +90,7 @@ ROUT.get("/get", auth_middleware, async (req, res) => {
         });
     } catch (err) {
         console.log(err.message);
-        res.status(400).send("ERROR", err.message);
+        res.status(500).json({ error: err.message });
     }
 });
 
@@ -93,7 +127,7 @@ ROUT.post(
             });
         } catch (err) {
             console.log(err.message);
-            res.status(500).send("ERROR", err.message);
+            res.status(500).json({ error: err.message });
         }
     }
 );

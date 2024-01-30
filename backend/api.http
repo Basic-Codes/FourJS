@@ -36,8 +36,13 @@ content-type: application/json
 
 
 
-### ! Get Classrooms
-GET {{host}}/api/classroom/get HTTP/1.1
+### ! Get Classroom
+GET {{host}}/api/classroom/get?code=KZDebw HTTP/1.1
+content-type: application/json
+x-auth-token: {{token}}
+
+### ! List Classrooms
+GET {{host}}/api/classroom/list HTTP/1.1
 content-type: application/json
 x-auth-token: {{token}}
 

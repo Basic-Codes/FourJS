@@ -15,7 +15,7 @@ const Home = () => {
 
     const getClassrooms = () => {
         axios
-            .get(`${BACKEND_URL}/api/classroom/get`, {
+            .get(`${BACKEND_URL}/api/classroom/list`, {
                 headers: getAxiosHeader(),
             })
             .then(function (response) {
