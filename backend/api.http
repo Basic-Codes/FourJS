@@ -1,6 +1,6 @@
 # @host = http://localhost:8080
 @host = http://192.168.0.103:8080
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjViM2VjNzkxZTQ0NGZkMzFkNTZhMWIyIiwiaWF0IjoxNzA2NjQ0MjAzLCJleHAiOjE3MDY2ODAyMDN9.LoKmFqgfRbZiAMbDOWYTfsgSp5AZbTkSVewY4iUi5oE
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjViOTY0Zjc3ZTBlNjFmYjNjMjBhZjk0IiwiaWF0IjoxNzA2NjQ4ODIzLCJleHAiOjE3MDY2ODQ4MjN9.DbcLIC3Xt-yNEXIJRc2W40dgp2hpMNrXdGE-UPLpVGA
 
 ### ! /
 GET {{host}} HTTP/1.1
@@ -17,7 +17,7 @@ POST {{host}}/api/login HTTP/1.1
 content-type: application/json
 
 {
-    "email": "r@g.com",
+    "email": "s1@g.com",
     "password": "sadd"
 }
 
@@ -26,7 +26,29 @@ POST {{host}}/api/signup HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Red",
-    "email": "r@g.com",
-    "password": "sadd"
+    "name": "Mr. Mozdaher",
+    "email": "s1@g.com",
+    "password": "sadd",
+    "isTeacher": false
+}
+
+
+
+
+### ! Add Classroom
+POST {{host}}/api/classroom/add HTTP/1.1
+content-type: application/json
+x-auth-token: {{token}}
+
+{
+    "name": "Civil Engineering"
+}
+
+### ! Join Classroom
+POST {{host}}/api/classroom/join HTTP/1.1
+content-type: application/json
+x-auth-token: {{token}}
+
+{
+    "code": "KZDebw"
 }

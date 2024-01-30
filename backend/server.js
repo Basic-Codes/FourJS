@@ -83,6 +83,8 @@ io.on("connection", (socket) => {
 app.get("/", (req, res) => res.send("🍆🍆🍆🍆🍆🍆🍆🍆🍆🍆"));
 app.use("/api/login", require("./Procedures/Authentication/Login"));
 app.use("/api/signup", require("./Procedures/Authentication/Signup"));
+app.use("/api/classroom/add", require("./Procedures/Classroom/Classroom"));
+app.use("/api/classroom/join", require("./Procedures/Classroom/JoinClassroom"));
 
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, () =>
