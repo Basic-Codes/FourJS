@@ -10,6 +10,11 @@ const ClassroomScheman = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    currentSessionCode: {
+        type: String,
+        required: false,
+        unique: true,
+    },
     teacherId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "UserModel",

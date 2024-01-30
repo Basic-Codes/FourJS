@@ -43,6 +43,7 @@ const Home = () => {
                     {classrooms?.map((item) => (
                         <ClassCard
                             name={item?.classroom?.name}
+                            key={item?.classroom?.code}
                             code={item?.classroom?.code}
                             teacherName={item?.teacher?.name}
                         />
