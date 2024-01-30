@@ -11,31 +11,28 @@ import Whiteboard from "./components/Classroom/Whiteboard";
 import Login from "./components/Dashboard/Login";
 import SignUp from "./components/Dashboard/Register";
 import VoiceChat from "./components/Classroom/VoiceChat";
-<<<<<<< HEAD
 import SessionChecker from "./components/Classroom/sessionChecker";
 import TeacherPanel from "./components/Classroom/TeacherPanel";
-=======
 import Home from "./components/Dashboard/home/Home";
->>>>>>> adc6c2d (before pull)
 
 function App() {
-    return (
-        <div className="overflow-x-hidden">
-            {/* <MyBaseScene /> */}
+  return (
+    <div className="overflow-x-hidden">
+      {/* <MyBaseScene /> */}
 
-            {/* <TutBaseScene /> */}
+      {/* <TutBaseScene /> */}
 
-            {/* <WebXRTest /> */}
+      {/* <WebXRTest /> */}
 
-            {/* <CanvasDraw /> */}
+      {/* <CanvasDraw /> */}
 
-            {/* <Canvas2DOn3js /> */}
+      {/* <Canvas2DOn3js /> */}
 
-            {/* <FirebaseTesting /> */}
+      {/* <FirebaseTesting /> */}
 
-            {/* <Whiteboard /> */}
+      {/* <Whiteboard /> */}
 
-            {/* <Classroom /> */}
+      {/* <Classroom /> */}
 
       <div>
         <Route path="/">
