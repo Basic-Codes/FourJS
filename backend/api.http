@@ -1,6 +1,6 @@
 # @host = http://localhost:8080
-@host = http://192.168.68.204:8080
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjViM2VjNzkxZTQ0NGZkMzFkNTZhMWIyIiwiaWF0IjoxNzA2MjkwMzAzLCJleHAiOjE3MDYzMjYzMDN9.k31bXRihL5iGg86gNVlP7bcvJKwRtCitp63ZQCpV7m8
+@host = http://192.168.0.103:8080
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjViM2VjNzkxZTQ0NGZkMzFkNTZhMWIyIiwiaWF0IjoxNzA2NjQ0MjAzLCJleHAiOjE3MDY2ODAyMDN9.LoKmFqgfRbZiAMbDOWYTfsgSp5AZbTkSVewY4iUi5oE
 
 ### ! /
 GET {{host}} HTTP/1.1
