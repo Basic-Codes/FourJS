@@ -3,7 +3,7 @@ import AuthLayout from "./AuthLayout";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios, { isCancel, AxiosError } from "axios";
-import { BACKEND_URL } from "../../helper/staticVars";
+import { BACKEND_URL } from "../../../helper/staticVars";
 const SignUp = () => {
   const [location, setLocation] = useLocation();
   const [data, setData] = useState({

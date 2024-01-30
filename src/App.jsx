@@ -8,12 +8,13 @@ import Canvas2DOn3js from "./components/TestComponents/Canvas2DOn3js";
 import Classroom from "./components/Classroom/Classroom";
 import FirebaseTesting from "./components/TestComponents/FirebaseTesting";
 import Whiteboard from "./components/Classroom/Whiteboard";
-import Login from "./components/Dashboard/Login";
-import SignUp from "./components/Dashboard/Register";
+import SignUp from "./components/Dashboard/auth/Register";
 import VoiceChat from "./components/Classroom/VoiceChat";
-import SessionChecker from "./components/Classroom/sessionChecker";
+import SessionChecker from "./components/Classroom/SessionChecker";
 import TeacherPanel from "./components/Classroom/TeacherPanel";
 import Home from "./components/Dashboard/home/Home";
+import Login from "./components/Dashboard/auth/Login";
+import SingleClass from "./components/Dashboard/SingleClass/SingleClass";
 
 function App() {
   return (
@@ -38,8 +39,11 @@ function App() {
         <Route path="/">
           <Home />
         </Route>
+        <Route path="/class/:class_id">
+          <SingleClass />
+        </Route>
         <Route path="/session/:session_code/student/:student_id">
-          <Classroom />
+          <SessionChecker />
         </Route>
         <Route path="/session/:session_code/teacher">
           <Whiteboard />
@@ -60,5 +64,5 @@ function App() {
 export default App;
 
 // ! http://192.168.0.101:5173/session/my-code/student/testing?isTesting
-// ! http://192.168.0.101:5173/session/my-code/teacher
+// ! http://192.168.0.101:5173  /session/my-code/teacher
 // ! http://192.168.0.100:5173/voice-chat?user_id=pc_user

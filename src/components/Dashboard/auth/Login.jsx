@@ -1,9 +1,9 @@
 import { Link, useLocation } from "wouter";
 import AuthLayout from "./AuthLayout";
 import { useState } from "react";
-import { BACKEND_URL } from "../../helper/staticVars";
+import { BACKEND_URL } from "../../../helper/staticVars";
 import axios from "axios";
-import { setUser } from "../../stores/user";
+import { setUser } from "../../../stores/user";
 
 const Login = () => {
   const [location, setLocation] = useLocation();

@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.18",
     "@nanostores/react": "^0.7.1",
     "axios": "^1.6.7",
     "dat.gui": "^0.7.9",
