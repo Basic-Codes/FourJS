@@ -8,6 +8,7 @@ import { useState } from "react";
 import { BACKEND_URL } from "../../../helper/staticVars";
 import axios from "axios";
 import { getAxiosHeader } from "../../../helper/utils";
+import { Link } from "wouter";
 
 const Navbar = () => {
     let [isOpen, setIsOpen] = useState(false);
@@ -50,18 +51,20 @@ const Navbar = () => {
     return (
         <div className="fixed w-full bg-white border-2 py-2">
             <div className="flex justify-between items-center max-w-screen-2xl mx-auto px-5 md:px-10">
-                <div className="flex items-center md:space-x-5 space-x-3">
-                    <figure>
-                        <img
-                            src="/logo/logo.png"
-                            alt=""
-                            className="md:w-12 w-10"
-                        />
-                    </figure>
-                    <p className="uppercase font-semibold hidden md:block md:text-lg text-[12px] ">
-                        VR classroom
-                    </p>
-                </div>
+                <Link href="/">
+                    <div className="flex items-center md:space-x-5 space-x-3 cursor-pointer">
+                        <figure>
+                            <img
+                                src="/logo/logo.png"
+                                alt=""
+                                className="md:w-12 w-10"
+                            />
+                        </figure>
+                        <p className="uppercase font-semibold hidden md:block md:text-lg text-[12px] ">
+                            VR classroom
+                        </p>
+                    </div>
+                </Link>
                 <div className="flex items-center space-x-4">
                     <div
                         onClick={() => setIsOpen(true)}

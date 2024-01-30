@@ -39,6 +39,9 @@ function App() {
                 <Route path="/">
                     <Home />
                 </Route>
+                <Route path="/class/:class_code">
+                    <SingleClass />
+                </Route>
                 <Route path="/session/:session_code/student/:student_id">
                     <SessionChecker />
                 </Route>

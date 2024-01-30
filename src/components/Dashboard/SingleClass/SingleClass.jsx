@@ -8,7 +8,7 @@ const SingleClass = () => {
 
     return (
         <div>
-            <Layout></Layout>
+            <Layout>Hello</Layout>
         </div>
     );
 };
