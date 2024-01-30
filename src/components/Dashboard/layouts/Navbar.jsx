@@ -1,6 +1,6 @@
 import React from "react";
 import { useStore } from "@nanostores/react";
-import { $user } from "../../../stores/user";
+import { $user, setUser } from "../../../stores/user";
 import NavbarProfileButton from "./NavbarProfileButton";
 import { FiPlus } from "react-icons/fi";
 import Add_Join_Modal from "./Add_Join_Modal";
@@ -9,12 +9,14 @@ import { BACKEND_URL } from "../../../helper/staticVars";
 import axios from "axios";
 import { getAxiosHeader } from "../../../helper/utils";
 import { Link } from "wouter";
+import { $classrooms } from "../../../stores/classroom";
 
 const Navbar = () => {
     let [isOpen, setIsOpen] = useState(false);
     let [name_or_code, setNameOrCode] = useState(false); // This cound be name or code
 
     const user = useStore($user);
+    const classrooms = useStore($classrooms);
 
     const onSubmit = () => {
         if (user) {
@@ -37,6 +39,13 @@ const Navbar = () => {
                 .then(function (response) {
                     if (response?.data?.classroom) {
                         setIsOpen(false);
+                        $classrooms.set([
+                            ...classrooms,
+                            {
+                                classroom: response?.data?.classroom,
+                                teacher: response?.data?.teacher,
+                            },
+                        ]);
                     } else {
                         console.error(response?.data?.msg);
                     }

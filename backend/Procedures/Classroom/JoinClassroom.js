@@ -39,9 +39,14 @@ ROUT.post(
         classroom.joinedStudentsId.push(user.id);
         classroom.save();
 
+        const teacher = await UserModel.findById(classroom.teacherId).select(
+            "-password"
+        );
+
         try {
             res.json({
                 classroom: classroom,
+                teacher: teacher,
             });
         } catch (err) {
             console.log(err.message);

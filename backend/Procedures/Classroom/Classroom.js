@@ -34,6 +34,9 @@ ROUT.get("/get", auth_middleware, async (req, res) => {
         } else {
             // NOTE: Bad Code
             classrooms = await ClassroomModel.find();
+            classrooms = classrooms.filter((item) =>
+                item.joinedStudentsId?.includes(user.id)
+            );
             classrooms = await Promise.all(
                 classrooms?.map(async (item) => {
                     const teacher = await UserModel.findById(
@@ -86,6 +89,7 @@ ROUT.post(
         try {
             res.json({
                 classroom: newClassroom,
+                teacher: user,
             });
         } catch (err) {
             console.log(err.message);
