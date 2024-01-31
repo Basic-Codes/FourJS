@@ -3,7 +3,9 @@ import { Vector3 } from "three";
 // export const SOCKET_SERVER_URL = "http://localhost:8080";
 // export const SOCKET_SERVER_URL = "http://192.168.0.100:8080/";
 export const SOCKET_SERVER_URL = "http://192.168.68.204:8080/";
-export const BACKEND_URL = "http://192.168.0.103:8080";
+
+// export const BACKEND_URL = "http://192.168.0.103:8080";
+export const BACKEND_URL = "http://192.168.68.204:8080";
 // export const BACKEND_URL = "http://localhost:8080";
 
 export const vrCamOffset = { x: 0, y: 0.3, z: -0.7 };
