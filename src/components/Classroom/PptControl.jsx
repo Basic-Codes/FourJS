@@ -26,6 +26,31 @@ const PptControl = ({ setCurrPptImgUrl }) => {
         `${BACKEND_URL}/images/image_05.jpg`,
     ]);
 
+    const getSessionPptImages = async () => {
+        axios
+            .get(
+                `${BACKEND_URL}/api/upload/ppt-image?code=${params?.session_code}`,
+                {
+                    headers: getAxiosHeader(),
+                }
+            )
+            .then(function (response) {
+                console.log(response?.data);
+                if (response?.data?.sessionPpts) {
+                    setImages(
+                        response?.data?.sessionPpts?.map(
+                            (ppt_path) => `${BACKEND_URL}/${ppt_path}`
+                        )
+                    );
+                } else {
+                    console.log("Session Ppts not found");
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+
     const handleFileChange = (e) => {
         console.log(e.target.files);
         const img = {
@@ -47,6 +72,7 @@ const PptControl = ({ setCurrPptImgUrl }) => {
                 if (response?.data?.success) {
                     console.log(response?.data?.msg);
                     setUploadImage(null);
+                    getSessionPptImages();
                 } else {
                     console.error(response?.data?.msg);
                 }
@@ -80,6 +106,10 @@ const PptControl = ({ setCurrPptImgUrl }) => {
     useEffect(() => {
         setCurrPptImgUrl(images[currImageIndex]);
     }, [currImageIndex]);
+
+    useEffect(() => {
+        getSessionPptImages();
+    }, []);
 
     return (
         <div className="">
