@@ -84,6 +84,7 @@ app.get("/", (req, res) => res.send("🍆🍆🍆🍆🍆🍆🍆🍆🍆🍆"))
 app.use("/api/login", require("./Procedures/Authentication/Login"));
 app.use("/api/signup", require("./Procedures/Authentication/Signup"));
 app.use("/api/classroom", require("./Procedures/Classroom/Classroom"));
+app.use("/api/upload/ppt-image", require("./Procedures/Upload/PPT_Image"));
 
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, () =>
