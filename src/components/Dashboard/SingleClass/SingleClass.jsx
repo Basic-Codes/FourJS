@@ -36,6 +36,10 @@ const SingleClass = () => {
             });
     };
 
+    useEffect(() => {
+        getClassroom();
+    }, []);
+
     const createSession = () => {
         axios
             .post(
@@ -62,9 +66,16 @@ const SingleClass = () => {
             });
     };
 
-    useEffect(() => {
-        getClassroom();
-    }, []);
+    const joinSession = () => {
+        if (single_classroom?.classroom?.currentSessionCode) {
+            setLocation(
+                `/session/${single_classroom?.classroom?.currentSessionCode}/student/${user.id}`
+            );
+        } else {
+            // TODO:: Show Error msg
+            console.log("No session available");
+        }
+    };
 
     return (
         <div>
@@ -94,7 +105,10 @@ const SingleClass = () => {
                                 Create VR Session
                             </button>
                         ) : (
-                            <button className="px-5 py-1 text-lg bg-emerald-500 text-white font-bold rounded">
+                            <button
+                                onClick={() => joinSession()}
+                                className="px-5 py-1 text-lg bg-emerald-500 text-white font-bold rounded"
+                            >
                                 Join VR Session
                             </button>
                         )}

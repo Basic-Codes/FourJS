@@ -38,15 +38,17 @@ const SessionChecker = () => {
                     `vr-classroom/session/${params?.session_code}/student-placement`
                 ),
                 async (snapshot) => {
-                    const data = snapshot.val();
+                    let data = snapshot.val();
 
-                    if (!data[params?.student_id]?.index) {
+                    console.log(params?.student_id);
+
+                    if (!data[`_${params?.student_id}`]?.index) {
                         console.log("Not added in the placement list");
 
-                        data[params?.student_id] = {
+                        data[`_${params?.student_id}`] = {
                             id: params?.student_id,
                             name: "Jolil",
-                            index: findNextAvailableIndex(data),
+                            index: data ? findNextAvailableIndex(data) : 0,
                         };
                         set(
                             ref(
