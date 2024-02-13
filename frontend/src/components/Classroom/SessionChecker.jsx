@@ -42,14 +42,24 @@ const SessionChecker = () => {
 
                     console.log(params?.student_id);
 
-                    if (!data[`_${params?.student_id}`]?.index) {
+                    if (!data || !data[`_${params?.student_id}`]?.index) {
                         console.log("Not added in the placement list");
 
-                        data[`_${params?.student_id}`] = {
-                            id: params?.student_id,
-                            name: "Jolil",
-                            index: data ? findNextAvailableIndex(data) : 0,
-                        };
+                        if (data) {
+                            data[`_${params?.student_id}`] = {
+                                id: params?.student_id,
+                                name: "Jolil",
+                                index: data ? findNextAvailableIndex(data) : 0,
+                            };
+                        } else {
+                            data = {
+                                [`_${params?.student_id}`]: {
+                                    id: params?.student_id,
+                                    index: 0,
+                                    name: "XXXX",
+                                },
+                            };
+                        }
                         set(
                             ref(
                                 db,
