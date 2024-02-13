@@ -64,5 +64,5 @@ function App() {
 export default App;
 
 // ! http://192.168.0.101:5173/session/my-code/student/testing?isTesting
-// ! http://192.168.0.101:5173  /session/my-code/teacher
+// ! http://192.168.0.101:5173/session/my-code/teacher
 // ! http://192.168.0.100:5173/voice-chat?user_id=pc_user

@@ -114,6 +114,30 @@ const SingleClass = () => {
                         )}
                     </div>
                 </div>
+
+                <div className="mt-10 space-y-5">
+                    <div className="px-10 py-5 rounded-lg shadow-lg border">
+                        <div className="font-semibold text-lg">Teacher 001</div>
+                        <div className="text-red-500 text-lg">
+                            Session has ended
+                        </div>
+                        <div>Session ended 5 min ago</div>
+                    </div>
+                    <div className="px-10 py-5 rounded-lg shadow-lg border">
+                        <div className="font-semibold text-lg">Teacher 001</div>
+                        <div className="text-emerald-500 text-lg">
+                            has created a new session
+                        </div>
+                        <div>Session Started 50 min ago</div>
+                    </div>
+                    <div className="px-10 py-5 rounded-lg shadow-lg border">
+                        <div className="font-semibold text-lg">Teacher 001</div>
+                        <div className="text-emerald-500 text-lg">
+                            has created a new session
+                        </div>
+                        <div>Session Started 5 min ago</div>
+                    </div>
+                </div>
             </Layout>
         </div>
     );

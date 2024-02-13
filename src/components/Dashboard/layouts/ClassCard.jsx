@@ -6,7 +6,7 @@ const ClassCard = ({ name, code, teacherName }) => {
         <Link href={`class/${code}`}>
             <div className="w-full hover:shadow cursor-pointer">
                 <div className="rounded-md border-2 w-full">
-                    <div className="rounded-t-md py-6 px-4 bg-[url('https://www.gstatic.com/classroom/themes/img_code.jpg')] bg-cover">
+                    <div className="rounded-t-md py-6 px-4 bg-[url('https://i.pinimg.com/736x/ec/48/9a/ec489afca579000b3f97c9486c9930dd.jpg')] bg-cover bg-bottom">
                         <p className="text-2xl capitalize text-white ">
                             {name}
                         </p>
