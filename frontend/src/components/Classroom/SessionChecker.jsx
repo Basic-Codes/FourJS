@@ -50,13 +50,15 @@ const SessionChecker = () => {
                                 id: params?.student_id,
                                 name: "Jolil",
                                 index: data ? findNextAvailableIndex(data) : 0,
+                                isHandRaise: false,
                             };
                         } else {
                             data = {
                                 [`_${params?.student_id}`]: {
                                     id: params?.student_id,
                                     index: 0,
-                                    name: "XXXX",
+                                    name: "-",
+                                    isHandRaise: false,
                                 },
                             };
                         }

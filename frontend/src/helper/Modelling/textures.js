@@ -23,3 +23,6 @@ export const wallTexture = () => {
     texture.repeat.set(2, 2);
     return texture;
 };
+export const handRaiseTexture = () => {
+    return new THREE.TextureLoader().load("/textures/hand_raise.png");
+};

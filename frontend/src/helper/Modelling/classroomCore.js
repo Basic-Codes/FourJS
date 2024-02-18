@@ -4,6 +4,7 @@ import { TTFLoader } from "three/examples/jsm/loaders/TTFLoader";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
 import {
+    handRaiseTexture,
     ironTexture,
     tilesTexture,
     wallTexture,
@@ -222,6 +223,22 @@ export const addText = (mainScene, text, position) => {
         textMesh.position.set(position.x, position.y, position.z);
         mainScene.scene.add(textMesh);
     });
+};
+
+export const addStudentHandRaise = (mainScene, position, user_id) => {
+    const handRaise = new THREE.Mesh(
+        new THREE.PlaneGeometry(0.2, 0.2),
+        new THREE.MeshPhongMaterial({
+            map: handRaiseTexture(),
+            transparent: true,
+            side: THREE.DoubleSide,
+        })
+    );
+    handRaise.position.set(position.x, position.y, position.z);
+    handRaise.receiveShadow = true;
+    handRaise.name = `hand_raise_${user_id}`;
+
+    mainScene.scene.add(handRaise);
 };
 
 export const addStudent = (

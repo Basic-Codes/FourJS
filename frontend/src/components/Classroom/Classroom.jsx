@@ -15,6 +15,7 @@ import {
     addCube,
     addSpotLight,
     addStudent,
+    addStudentHandRaise,
     addTable,
     addTeacher,
     addTeacherTable,
@@ -51,7 +52,7 @@ function Classroom() {
         }
     };
     const updatePptOnWhiteboard = (pptImage) => {
-        console.log("PPPPPPPPPPPPPPPPP", pptImage);
+        console.log("--pptImage--", pptImage);
         if (whiteBoardRef?.current) {
             // const loader = new THREE.TextureLoader();
             // const texture = loader.load(pptImage, () => {
@@ -138,18 +139,40 @@ function Classroom() {
         if (mainScene && studentPlacementData) {
             // ! Render All Students
             for (const [key, value] of Object.entries(studentPlacementData)) {
+                const placeableChairPos = chairsData[value.index].position;
+                const studentPosVector = new Vector3(
+                    placeableChairPos.x + vrCamOffset.x,
+                    placeableChairPos.y + vrCamOffset.y,
+                    placeableChairPos.z + vrCamOffset.z
+                );
+                const handRaisePos = new Vector3(
+                    studentPosVector.x,
+                    studentPosVector.y + 0.5,
+                    studentPosVector.z
+                );
+
                 let studentModel = mainScene.scene.getObjectByName(
                     `student_${key}`
                 );
+                let handRaiseModel = mainScene.scene.getObjectByName(
+                    `hand_raise_${key}`
+                );
+
+                // ! Add Hand Raise
+                if (handRaiseModel) {
+                    if (value.isHandRaise == false) {
+                        mainScene.scene.remove(handRaiseModel);
+                    }
+                } else {
+                    if (value.isHandRaise) {
+                        addStudentHandRaise(mainScene, handRaisePos, key);
+                    }
+                }
+
+                // ! Add Students
                 if (studentModel) {
                     console.log(`student_${key} model already exist`);
                 } else {
-                    const placeableChairPos = chairsData[value.index].position;
-                    const studentPosVector = new Vector3(
-                        placeableChairPos.x + vrCamOffset.x,
-                        placeableChairPos.y + vrCamOffset.y,
-                        placeableChairPos.z + vrCamOffset.z
-                    );
                     addStudent(
                         mainScene,
                         studentPosVector,
