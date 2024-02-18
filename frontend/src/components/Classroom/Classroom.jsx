@@ -26,6 +26,7 @@ import { useParams } from "wouter";
 import { useQueryParams } from "react-use-query-params";
 import FakeWhiteboard from "./FakeWhiteboard";
 import { useCallback } from "react";
+import ClassroomPageUI from "./ClassroomPageUI";
 
 function Classroom() {
     const params = useParams();
@@ -270,6 +271,7 @@ function Classroom() {
     return (
         <div>
             <canvas id="myThreeJsCanvas" />
+            <ClassroomPageUI />
             <FakeWhiteboard update3DWhiteboard={update3DWhiteboard} />
         </div>
     );
