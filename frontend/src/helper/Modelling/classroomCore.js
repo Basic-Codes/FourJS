@@ -78,6 +78,18 @@ export const makeRoom = (mainScene) => {
     mainScene.scene.add(roomGroup);
 };
 
+export const addTeacher = (mainScene) => {
+    const teacher = new THREE.Mesh(
+        new THREE.BoxGeometry(0.3, 0.5, 0.3),
+        new THREE.MeshPhongMaterial({ color: "#814be5" })
+    );
+    teacher.position.set(0, 0.6, 4);
+    teacher.receiveShadow = true;
+    teacher.name = "teacher_table";
+
+    mainScene.scene.add(teacher);
+};
+
 export const addTeacherTable = (mainScene) => {
     const teacherTableBottom = new THREE.Mesh(
         new THREE.BoxGeometry(1.8, 0.8, 0.7),

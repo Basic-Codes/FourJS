@@ -16,6 +16,7 @@ import {
     addSpotLight,
     addStudent,
     addTable,
+    addTeacher,
     addTeacherTable,
     addText,
     makeRoom,
@@ -120,6 +121,9 @@ function Classroom() {
 
         addCube(mainScene, testCubeRef);
 
+        if (!hasParam("isTeacher")) {
+            addTeacher(mainScene);
+        }
         addTeacherTable(mainScene);
         chairsData?.map((item, index) => {
             addTable(mainScene, index, item.position);
@@ -159,22 +163,32 @@ function Classroom() {
 
             // ! Place My camera in proper position
             if (!hasParam("isTesting")) {
-                const myPlacementData = studentPlacementData[params.student_id];
-                const myPos = myPlacementData?.index
-                    ? chairsData[myPlacementData.index].position
-                    : null;
-                if (myPlacementData && myPos) {
-                    const myPosVector = new Vector3(
-                        myPos.x + vrCamOffset.x,
-                        myPos.y + vrCamOffset.y,
-                        myPos.z + vrCamOffset.z
-                    );
+                if (hasParam("isTeacher")) {
+                    const myPosVector = new Vector3(0, 0.6, 4);
                     mainScene.cgroup.position.set(
                         myPosVector.x,
                         myPosVector.y,
                         myPosVector.z
                     );
-                    testCube.position.set(myPos.x, myPos.y + 0.07, myPos.z);
+                } else {
+                    const myPlacementData =
+                        studentPlacementData[params.student_id];
+                    const myPos = myPlacementData?.index
+                        ? chairsData[myPlacementData.index].position
+                        : null;
+                    if (myPlacementData && myPos) {
+                        const myPosVector = new Vector3(
+                            myPos.x + vrCamOffset.x,
+                            myPos.y + vrCamOffset.y,
+                            myPos.z + vrCamOffset.z
+                        );
+                        mainScene.cgroup.position.set(
+                            myPosVector.x,
+                            myPosVector.y,
+                            myPosVector.z
+                        );
+                        testCube.position.set(myPos.x, myPos.y + 0.07, myPos.z);
+                    }
                 }
             }
         }
