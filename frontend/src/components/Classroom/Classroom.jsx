@@ -16,6 +16,7 @@ import {
     addSpotLight,
     addStudent,
     addTable,
+    addTeacherTable,
     addText,
     makeRoom,
 } from "../../helper/Modelling/classroomCore";
@@ -119,6 +120,7 @@ function Classroom() {
 
         addCube(mainScene, testCubeRef);
 
+        addTeacherTable(mainScene);
         chairsData?.map((item, index) => {
             addTable(mainScene, index, item.position);
         });

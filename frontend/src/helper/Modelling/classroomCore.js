@@ -78,6 +78,31 @@ export const makeRoom = (mainScene) => {
     mainScene.scene.add(roomGroup);
 };
 
+export const addTeacherTable = (mainScene) => {
+    const teacherTableBottom = new THREE.Mesh(
+        new THREE.BoxGeometry(1.8, 0.8, 0.7),
+        new THREE.MeshPhongMaterial({ map: woodTexture() })
+    );
+    teacherTableBottom.position.set(0, -0.2, 0);
+    teacherTableBottom.receiveShadow = true;
+    teacherTableBottom.name = "teacher_table";
+
+    const teacherTableTop = new THREE.Mesh(
+        new THREE.BoxGeometry(2.1, 0.1, 1),
+        new THREE.MeshPhongMaterial({ map: wood2Texture() })
+    );
+    teacherTableTop.position.set(0, 0.25, 0);
+    teacherTableTop.receiveShadow = true;
+    teacherTableTop.name = "teacher_table";
+
+    const teacherTableG = new THREE.Group();
+    teacherTableG.position.set(0, 0.1, 3.5);
+    teacherTableG.add(teacherTableBottom);
+    teacherTableG.add(teacherTableTop);
+
+    mainScene.scene.add(teacherTableG);
+};
+
 export const addTable = (
     mainScene,
     tableNo,
