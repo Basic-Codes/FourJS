@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { Vector3 } from "three";
@@ -25,6 +26,7 @@ import {
 import { useParams } from "wouter";
 import { useQueryParams } from "react-use-query-params";
 import FakeWhiteboard from "./FakeWhiteboard";
+import VoiceChat from "./VoiceChat";
 import { useCallback } from "react";
 import ClassroomPageUI from "./ClassroomPageUI";
 
@@ -140,11 +142,11 @@ function Classroom() {
         if (mainScene && studentPlacementData) {
             // ! Render All Students
             for (const [key, value] of Object.entries(studentPlacementData)) {
-                const placeableChairPos = chairsData[value.index].position;
+                const placeableChairPos = chairsData[value.index]?.position;
                 const studentPosVector = new Vector3(
-                    placeableChairPos.x + vrCamOffset.x,
-                    placeableChairPos.y + vrCamOffset.y,
-                    placeableChairPos.z + vrCamOffset.z
+                    placeableChairPos?.x + vrCamOffset.x,
+                    placeableChairPos?.y + vrCamOffset.y,
+                    placeableChairPos?.z + vrCamOffset.z
                 );
                 const handRaisePos = new Vector3(
                     studentPosVector.x,
@@ -179,8 +181,9 @@ function Classroom() {
                         studentPosVector,
                         key,
                         value.name,
-                        key == params.student_id && !hasParam("isTesting"),
-                        key == params.student_id
+                        key == `_${params.student_id}` &&
+                            !hasParam("isTesting"),
+                        key == `_${params.student_id}`
                     );
                 }
             }
@@ -196,7 +199,7 @@ function Classroom() {
                     );
                 } else {
                     const myPlacementData =
-                        studentPlacementData[params.student_id];
+                        studentPlacementData[`_${params.student_id}`];
                     const myPos = myPlacementData?.index
                         ? chairsData[myPlacementData.index].position
                         : null;
@@ -272,7 +275,10 @@ function Classroom() {
         <div>
             <canvas id="myThreeJsCanvas" />
             <ClassroomPageUI />
-            <FakeWhiteboard update3DWhiteboard={update3DWhiteboard} />
+            <FakeWhiteboard
+                update3DWhiteboard={update3DWhiteboard}
+                user_id={params.student_id}
+            />
         </div>
     );
 }

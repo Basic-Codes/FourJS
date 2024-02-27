@@ -9,7 +9,7 @@ import Classroom from "./components/Classroom/Classroom";
 import FirebaseTesting from "./components/TestComponents/FirebaseTesting";
 import Whiteboard from "./components/Classroom/Whiteboard";
 import SignUp from "./components/Dashboard/auth/Register";
-import VoiceChat from "./components/Classroom/VoiceChat";
+import VoiceChat_OLD2 from "./components/Classroom/VoiceChat_OLD2";
 import SessionChecker from "./components/Classroom/SessionChecker";
 import TeacherPanel from "./components/Classroom/TeacherPanel";
 import Home from "./components/Dashboard/home/Home";
@@ -49,7 +49,7 @@ function App() {
                     <TeacherPanel />
                 </Route>
                 <Route path="/voice-chat">
-                    <VoiceChat />
+                    <VoiceChat_OLD2 />
                 </Route>
                 <Route path="/users/:name">
                     {(params) => <div>Hello, {params.name}!</div>}

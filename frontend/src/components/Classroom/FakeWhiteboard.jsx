@@ -4,8 +4,9 @@ import { useEffect } from "react";
 import * as THREE from "three";
 import io from "socket.io-client";
 import { SOCKET_SERVER_URL, testLine } from "../../helper/staticVars";
+import VoiceChat from "./VoiceChat";
 
-const FakeWhiteboard = ({ update3DWhiteboard }) => {
+const FakeWhiteboard = ({ update3DWhiteboard, student_id }) => {
     const [socket, setSocket] = useState(null);
     const [context, setContext] = useState(null);
     const canvasRef = useRef(null);
@@ -76,7 +77,12 @@ const FakeWhiteboard = ({ update3DWhiteboard }) => {
         }
     }, [socket]);
 
-    return <canvas ref={canvasRef} className="hidden"></canvas>;
+    return (
+        <div>
+            <canvas ref={canvasRef} className="hidden"></canvas>
+            <VoiceChat socket={socket} user_id={student_id} />
+        </div>
+    );
 };
 
 export default FakeWhiteboard;
