@@ -5,6 +5,8 @@ import { useParams } from "wouter";
 import { ref, onValue, set } from "firebase/database";
 import { db } from "../../helper/firebase";
 import Loading from "../Misc/Loading";
+import { useStore } from "@nanostores/react";
+import { $user } from "../../stores/user";
 
 const findNextAvailableIndex = (data) => {
     // Extract all index values, filter out undefined, and sort them
@@ -26,6 +28,7 @@ const findNextAvailableIndex = (data) => {
 
 const SessionChecker = () => {
     const params = useParams();
+    const user = useStore($user);
 
     const [isReady, setIsReady] = useState(false);
 
@@ -48,7 +51,7 @@ const SessionChecker = () => {
                         if (data) {
                             data[`_${params?.student_id}`] = {
                                 id: params?.student_id,
-                                name: "Jolil",
+                                name: user?.name ?? "Jolil",
                                 index: data ? findNextAvailableIndex(data) : 0,
                                 isHandRaise: false,
                             };

@@ -59,7 +59,7 @@ const VoiceChat = ({ user_id, socket }) => {
                     });
                 });
 
-            const connectToNewUser = (userId, stream) => {
+            var connectToNewUser = (userId, stream) => {
                 const call = myPeer.call(userId, stream);
 
                 call.on("stream", (otherStream) => {
@@ -81,7 +81,10 @@ const VoiceChat = ({ user_id, socket }) => {
 
     return (
         <div>
-            {/* <div>Voice Chat -------------------------- {mic.toString()}</div> */}
+            {/* <div>
+                Voice Chat -------------------------- {mic.toString()} -{" "}
+                {user_id}
+            </div> */}
             <audio className="hidden" ref={userAudioRef} autoPlay controls>
                 <source />
             </audio>

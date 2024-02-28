@@ -18,7 +18,7 @@ const ClassroomPageUI = () => {
         set(
             ref(
                 db,
-                `vr-classroom/session/${params?.session_code}/student-placement/${params?.student_id}/isHandRaise`
+                `vr-classroom/session/${params?.session_code}/student-placement/_${params?.student_id}/isHandRaise`
             ),
             !isHandRaise
         );
@@ -33,7 +33,7 @@ const ClassroomPageUI = () => {
             onValue(
                 ref(
                     db,
-                    `vr-classroom/session/${params?.session_code}/student-placement/${params?.student_id}/isHandRaise`
+                    `vr-classroom/session/${params?.session_code}/student-placement/_${params?.student_id}/isHandRaise`
                 ),
                 async (snapshot) => {
                     const data = snapshot.val();

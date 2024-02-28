@@ -161,6 +161,8 @@ function Classroom() {
                     `hand_raise_${key}`
                 );
 
+                console.log("xxxxxxxxxxxxxx", value.name, handRaiseModel);
+
                 // ! Add Hand Raise
                 if (handRaiseModel) {
                     if (value.isHandRaise == false) {
@@ -260,7 +262,7 @@ function Classroom() {
                 ),
                 async (snapshot) => {
                     const data = snapshot.val();
-                    updatePptOnWhiteboard(data.currPptImgUrl);
+                    updatePptOnWhiteboard(data?.currPptImgUrl);
                     setSessionSettings(data);
                 }
             );

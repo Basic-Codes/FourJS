@@ -6,7 +6,7 @@ import io from "socket.io-client";
 import { SOCKET_SERVER_URL, testLine } from "../../helper/staticVars";
 import VoiceChat from "./VoiceChat";
 
-const FakeWhiteboard = ({ update3DWhiteboard, student_id }) => {
+const FakeWhiteboard = ({ update3DWhiteboard, user_id }) => {
     const [socket, setSocket] = useState(null);
     const [context, setContext] = useState(null);
     const canvasRef = useRef(null);
@@ -80,7 +80,7 @@ const FakeWhiteboard = ({ update3DWhiteboard, student_id }) => {
     return (
         <div>
             <canvas ref={canvasRef} className="hidden"></canvas>
-            <VoiceChat socket={socket} user_id={student_id} />
+            <VoiceChat socket={socket} user_id={user_id} />
         </div>
     );
 };
