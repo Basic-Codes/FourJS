@@ -27,14 +27,14 @@ const VoiceChat = ({ user_id, socket }) => {
             navigator.mediaDevices
                 .getUserMedia({ video: false, audio: true })
                 .then((stream) => {
-                    const audioTracks = stream.getAudioTracks();
-                    audioTracks.forEach((track) => {
-                        if (!mic) {
-                            track.enabled = false;
-                        } else {
-                            track.enabled = true;
-                        }
-                    });
+                    // const audioTracks = stream.getAudioTracks();
+                    // audioTracks.forEach((track) => {
+                    //     if (!mic) {
+                    //         track.enabled = false;
+                    //     } else {
+                    //         track.enabled = true;
+                    //     }
+                    // });
 
                     myPeer.on("open", (id) => {
                         socket.emit("voice-chat-join", "imaginary-room", id);

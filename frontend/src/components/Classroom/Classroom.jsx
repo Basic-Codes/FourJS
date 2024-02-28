@@ -123,7 +123,7 @@ function Classroom() {
         makeRoom(mainScene);
         addBoard(mainScene, whiteBoardRef);
 
-        addCube(mainScene, testCubeRef);
+        // addCube(mainScene, testCubeRef);
 
         if (!hasParam("isTeacher")) {
             addTeacher(mainScene);
@@ -160,8 +160,6 @@ function Classroom() {
                 let handRaiseModel = mainScene.scene.getObjectByName(
                     `hand_raise_${key}`
                 );
-
-                console.log("xxxxxxxxxxxxxx", value.name, handRaiseModel);
 
                 // ! Add Hand Raise
                 if (handRaiseModel) {
@@ -216,7 +214,7 @@ function Classroom() {
                             myPosVector.y,
                             myPosVector.z
                         );
-                        testCube.position.set(myPos.x, myPos.y + 0.07, myPos.z);
+                        // testCube.position.set(myPos.x, myPos.y + 0.07, myPos.z);
                     }
                 }
             }
@@ -276,7 +274,7 @@ function Classroom() {
     return (
         <div>
             <canvas id="myThreeJsCanvas" />
-            <ClassroomPageUI />
+            <ClassroomPageUI hideHandRaise={params.student_id == "teacher"} />
             <FakeWhiteboard
                 update3DWhiteboard={update3DWhiteboard}
                 user_id={params.student_id}

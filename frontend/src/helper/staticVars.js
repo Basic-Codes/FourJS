@@ -1,7 +1,7 @@
 import { Vector3 } from "three";
 
 // export const SOCKET_SERVER_URL = "http://localhost:8080";
-// export const SOCKET_SERVER_URL = "http://192.168.0.106:8080/";
+export const SOCKET_SERVER_URL = "http://192.168.0.105:8080/";
 // export const SOCKET_SERVER_URL = "http://192.168.68.204:8080/";
 
 export const BACKEND_URL = "http://192.168.0.105:8080";

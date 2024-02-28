@@ -35,48 +35,54 @@ const SessionChecker = () => {
     // ! Firebase Stuffs
     useEffect(() => {
         if (params?.session_code && params?.student_id) {
-            onValue(
-                ref(
-                    db,
-                    `vr-classroom/session/${params?.session_code}/student-placement`
-                ),
-                async (snapshot) => {
-                    let data = snapshot.val();
+            if (params?.student_id == "teacher") {
+                setIsReady(true);
+            } else {
+                onValue(
+                    ref(
+                        db,
+                        `vr-classroom/session/${params?.session_code}/student-placement`
+                    ),
+                    async (snapshot) => {
+                        let data = snapshot.val();
 
-                    console.log(params?.student_id);
+                        console.log(params?.student_id);
 
-                    if (!data || !data[`_${params?.student_id}`]?.index) {
-                        console.log("Not added in the placement list");
+                        if (!data || !data[`_${params?.student_id}`]?.index) {
+                            console.log("Not added in the placement list");
 
-                        if (data) {
-                            data[`_${params?.student_id}`] = {
-                                id: params?.student_id,
-                                name: user?.name ?? "Jolil",
-                                index: data ? findNextAvailableIndex(data) : 0,
-                                isHandRaise: false,
-                            };
-                        } else {
-                            data = {
-                                [`_${params?.student_id}`]: {
+                            if (data) {
+                                data[`_${params?.student_id}`] = {
                                     id: params?.student_id,
-                                    index: 0,
-                                    name: "-",
+                                    name: user?.name ?? "Jolil",
+                                    index: data
+                                        ? findNextAvailableIndex(data)
+                                        : 0,
                                     isHandRaise: false,
-                                },
-                            };
+                                };
+                            } else {
+                                data = {
+                                    [`_${params?.student_id}`]: {
+                                        id: params?.student_id,
+                                        index: 0,
+                                        name: "-",
+                                        isHandRaise: false,
+                                    },
+                                };
+                            }
+                            set(
+                                ref(
+                                    db,
+                                    `vr-classroom/session/${params?.session_code}/student-placement`
+                                ),
+                                data
+                            );
+                        } else {
+                            setIsReady(true);
                         }
-                        set(
-                            ref(
-                                db,
-                                `vr-classroom/session/${params?.session_code}/student-placement`
-                            ),
-                            data
-                        );
-                    } else {
-                        setIsReady(true);
                     }
-                }
-            );
+                );
+            }
         }
     }, []);
 
