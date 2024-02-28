@@ -47,9 +47,7 @@ ROUT.post(
             let user = await UserModel.findOne({ email });
 
             if (!user) {
-                return res
-                    .status(400)
-                    .json({ msg: "User doesn't exist | Didn't find the user" });
+                return res.status(400).json({ msg: "User doesn't exist." });
             }
 
             // ---------- Check Password

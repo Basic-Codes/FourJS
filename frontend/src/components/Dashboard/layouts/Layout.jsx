@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { useStore } from "@nanostores/react";
 import { $user, setUser } from "../../../stores/user";
 import Navbar from "./Navbar";

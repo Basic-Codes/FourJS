@@ -154,11 +154,11 @@ ROUT.post(
         const classroom = await ClassroomModel.findOne({ code });
 
         if (!classroom) {
-            return res.status(400).json({ msg: "Classroom not found!" });
+            return res.status(200).json({ msg: "Classroom not found!" });
         }
 
         if (classroom.joinedStudentsId?.includes(user.id)) {
-            return res.status(400).json({ msg: "Already joined classroom" });
+            return res.status(200).json({ msg: "Already joined this class" });
         }
 
         classroom.joinedStudentsId.push(user.id);

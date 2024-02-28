@@ -10,6 +10,7 @@ import axios from "axios";
 import { getAxiosHeader } from "../../../helper/utils";
 import { Link } from "wouter";
 import { $classrooms } from "../../../stores/classroom";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
     let [isOpen, setIsOpen] = useState(false);
@@ -48,11 +49,12 @@ const Navbar = () => {
                         ]);
                     } else {
                         console.error(response?.data?.msg);
+                        toast.error(response?.data?.msg);
                     }
                 })
                 .catch(function (error) {
                     console.log(error);
-                    setLocation("/login");
+                    toast.error("Something went wrong");
                 });
         }
     };

@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { Link, useLocation } from "wouter";
 import AuthLayout from "./AuthLayout";
 import { useState } from "react";
 import { BACKEND_URL } from "../../../helper/staticVars";
 import axios from "axios";
 import { setUser } from "../../../stores/user";
+import { toast } from "react-toastify";
 
 const Login = () => {
     const [location, setLocation] = useLocation();
@@ -23,10 +25,20 @@ const Login = () => {
                     setLocation("/");
                 } else {
                     console.error("no token");
+                    toast.error("no token");
                 }
             })
             .catch(function (error) {
                 console.log(error.response.data);
+                if (error?.response?.data?.msg) {
+                    toast.error(error?.response?.data?.msg);
+                } else if (error?.response?.data?.errors) {
+                    error?.response?.data?.errors?.forEach((item) => {
+                        toast.error(item?.msg);
+                    });
+                } else {
+                    toast.error("Something went wrong!");
+                }
             });
     };
 
@@ -63,7 +75,7 @@ const Login = () => {
 
             <Link href="/signup">
                 <div className="mt-3 text-xs">
-                    <span className="mr-1">Don't have an accound?</span>
+                    <span className="mr-1">Don`t have an accound?</span>
                     <span className="font-semibold text-[#4B4DF7] cursor-pointer ">
                         Sign Up
                     </span>

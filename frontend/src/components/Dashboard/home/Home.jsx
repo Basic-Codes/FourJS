@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useStore } from "@nanostores/react";
 import React from "react";
 import { $user, setUser } from "../../../stores/user";
@@ -28,7 +29,6 @@ const Home = () => {
             })
             .catch(function (error) {
                 console.log(error);
-                setLocation("/login");
             });
     };
 

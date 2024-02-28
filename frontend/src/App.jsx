@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { Link, Route } from "wouter";
 import MyBaseScene from "./components/TestComponents/MyBaseScene";
@@ -15,6 +16,8 @@ import TeacherPanel from "./components/Classroom/TeacherPanel";
 import Home from "./components/Dashboard/home/Home";
 import Login from "./components/Dashboard/auth/Login";
 import SingleClass from "./components/Dashboard/SingleClass/SingleClass";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
     return (
@@ -36,6 +39,8 @@ function App() {
             {/* <Classroom /> */}
 
             <div>
+                <ToastContainer position="top-center" />
+
                 <Route path="/">
                     <Home />
                 </Route>

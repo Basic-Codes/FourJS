@@ -1,9 +1,12 @@
+/* eslint-disable no-unused-vars */
 import { Link, useLocation } from "wouter";
 import AuthLayout from "./AuthLayout";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios, { isCancel, AxiosError } from "axios";
 import { BACKEND_URL } from "../../../helper/staticVars";
+import { toast } from "react-toastify";
+
 const SignUp = () => {
     const [location, setLocation] = useLocation();
     const [data, setData] = useState({
@@ -27,6 +30,15 @@ const SignUp = () => {
             })
             .catch(function (error) {
                 console.log(error.response.data);
+                if (error?.response?.data?.msg) {
+                    toast.error(error?.response?.data?.msg);
+                } else if (error?.response?.data?.errors) {
+                    error?.response?.data?.errors?.forEach((item) => {
+                        toast.error(item?.msg);
+                    });
+                } else {
+                    toast.error("Something went wrong!");
+                }
             });
     };
 
