@@ -13,7 +13,7 @@ const ClassroomScheman = new mongoose.Schema({
     currentSessionCode: {
         type: String,
         required: false,
-        unique: true,
+        unique: false,
     },
     teacherId: {
         type: mongoose.Schema.Types.ObjectId,

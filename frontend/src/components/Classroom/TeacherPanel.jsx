@@ -5,11 +5,16 @@ import { useEffect } from "react";
 import { ref, onValue, set } from "firebase/database";
 import { db } from "../../helper/firebase";
 import { useLocation, useParams } from "wouter";
+import VoiceChat from "./VoiceChat";
+import io from "socket.io-client";
+import { BACKEND_URL } from "../../helper/staticVars";
+import ClassroomPageUI from "./ClassroomPageUI";
 
 const TeacherPanel = () => {
     const params = useParams();
     const [location, setLocation] = useLocation();
 
+    const [socket, setSocket] = useState(null);
     const [currState, setCurrState] = useState("whiteboard");
     const [currPptImgUrl, setCurrPptImgUrl] = useState(null);
 
@@ -30,6 +35,12 @@ const TeacherPanel = () => {
             );
         }
     }, [currState, currPptImgUrl]);
+
+    useEffect(() => {
+        const newSocket = io(BACKEND_URL);
+        setSocket(newSocket);
+        return () => newSocket.close();
+    }, [setSocket]);
 
     return (
         <div>
@@ -70,6 +81,8 @@ const TeacherPanel = () => {
             ) : (
                 <PptControl setCurrPptImgUrl={setCurrPptImgUrl} />
             )}
+            <ClassroomPageUI hideHandRaise />
+            <VoiceChat socket={socket} user_id={"teacher"} />
         </div>
     );
 };

@@ -9,6 +9,7 @@ import { $single_classroom } from "../../../stores/classroom";
 import { useEffect } from "react";
 import { getAxiosHeader } from "../../../helper/utils";
 import { Link, useLocation, useParams } from "wouter";
+import { toast } from "react-toastify";
 
 const SingleClass = () => {
     const [location, setLocation] = useLocation();
@@ -73,7 +74,7 @@ const SingleClass = () => {
                 `/session/${single_classroom?.classroom?.currentSessionCode}/student/${user.id}`
             );
         } else {
-            // TODO:: Show Error msg
+            toast.error("No session available");
             console.log("No session available");
         }
     };

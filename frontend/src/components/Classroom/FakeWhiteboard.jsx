@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import * as THREE from "three";
 import io from "socket.io-client";
-import { SOCKET_SERVER_URL, testLine } from "../../helper/staticVars";
+import { BACKEND_URL, testLine } from "../../helper/staticVars";
 import VoiceChat from "./VoiceChat";
 
 const FakeWhiteboard = ({ update3DWhiteboard, user_id }) => {
@@ -60,7 +60,7 @@ const FakeWhiteboard = ({ update3DWhiteboard, user_id }) => {
     // }, []);
 
     useEffect(() => {
-        const newSocket = io(SOCKET_SERVER_URL);
+        const newSocket = io(BACKEND_URL);
         setSocket(newSocket);
         return () => newSocket.close();
     }, [setSocket]);

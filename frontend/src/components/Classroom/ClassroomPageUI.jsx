@@ -7,7 +7,7 @@ import { db } from "../../helper/firebase";
 import { useStore } from "@nanostores/react";
 import { $mic } from "../../stores/classroom";
 
-const ClassroomPageUI = () => {
+const ClassroomPageUI = ({ hideHandRaise = false }) => {
     const params = useParams();
 
     const [isHandRaise, setIsHandRaise] = useState(false);
@@ -55,16 +55,18 @@ const ClassroomPageUI = () => {
                     <IoMdMicOff className="text-2xl" />
                 )}
             </button>
-            <button
-                onClick={onHandRaise}
-                className="absolute bottom-5 left-5 bg-white p-3 rounded-lg"
-            >
-                {isHandRaise ? (
-                    <FaHandPaper className="text-2xl text-orange-300" />
-                ) : (
-                    <FaHandRock className="text-2xl" />
-                )}
-            </button>
+            {!hideHandRaise && (
+                <button
+                    onClick={onHandRaise}
+                    className="absolute bottom-5 left-5 bg-white p-3 rounded-lg"
+                >
+                    {isHandRaise ? (
+                        <FaHandPaper className="text-2xl text-orange-300" />
+                    ) : (
+                        <FaHandRock className="text-2xl" />
+                    )}
+                </button>
+            )}
         </div>
     );
 };

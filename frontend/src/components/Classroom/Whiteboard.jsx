@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import io from "socket.io-client";
-import { SOCKET_SERVER_URL } from "../../helper/staticVars";
+import { BACKEND_URL } from "../../helper/staticVars";
 
 const xOffset = 600;
 const yOffset = 100;
@@ -17,7 +17,7 @@ function Whiteboard() {
     const canvasRef = useRef(null);
 
     useEffect(() => {
-        const newSocket = io(SOCKET_SERVER_URL);
+        const newSocket = io(BACKEND_URL);
         setSocket(newSocket);
         return () => newSocket.close();
     }, [setSocket]);

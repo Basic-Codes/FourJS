@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import io from "socket.io-client";
-import { SOCKET_SERVER_URL } from "../../helper/staticVars";
+import { BACKEND_URL } from "../../helper/staticVars";
 import Peer from "peerjs";
 import { useQueryParams } from "react-use-query-params";
 import { useStore } from "@nanostores/react";
