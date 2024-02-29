@@ -53,7 +53,7 @@ function Whiteboard() {
             canvasRef?.current?.height
         );
 
-        // socket.emit("clear-whiteboard", true);
+        socket.emit("clear-whiteboard", true);
     };
 
     // function drawStroke(strokeData) {

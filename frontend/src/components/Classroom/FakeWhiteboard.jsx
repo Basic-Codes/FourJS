@@ -14,10 +14,10 @@ const FakeWhiteboard = ({ update3DWhiteboard, user_id }) => {
     function drawStroke(strokeData) {
         context.beginPath();
         context.moveTo(strokeData[0].x, strokeData[0].y);
-        console.log("strokeData", strokeData);
 
         strokeData.forEach((point) => {
             if (point?.isStart) {
+                context.beginPath();
                 context.moveTo(point.x, point.y);
             }
             context.lineTo(point.x, point.y);
@@ -38,6 +38,8 @@ const FakeWhiteboard = ({ update3DWhiteboard, user_id }) => {
             setContext(canvasRef?.current?.getContext("2d"));
         }
     }, [canvasRef]);
+
+    useEffect(() => {}, []);
 
     useEffect(() => {
         if (context && canvasRef?.current) {
@@ -72,6 +74,7 @@ const FakeWhiteboard = ({ update3DWhiteboard, user_id }) => {
     useEffect(() => {
         if (socket) {
             socket.on("lineData", (data) => {
+                console.log("data.data", data.data);
                 if (data?.self) {
                     // Do nothing
                 } else {
@@ -82,12 +85,16 @@ const FakeWhiteboard = ({ update3DWhiteboard, user_id }) => {
                 if (data?.self) {
                     // Do nothing
                 } else {
+                    console.log("Clear Canvas", data);
                     context?.clearRect(
                         0,
                         0,
                         canvasRef?.current?.width,
                         canvasRef?.current?.height
                     );
+                    setTimeout(() => {
+                        makeTextureFromCanvas();
+                    }, 1000);
                 }
             });
         }
