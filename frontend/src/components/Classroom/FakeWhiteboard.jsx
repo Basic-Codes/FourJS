@@ -14,8 +14,12 @@ const FakeWhiteboard = ({ update3DWhiteboard, user_id }) => {
     function drawStroke(strokeData) {
         context.beginPath();
         context.moveTo(strokeData[0].x, strokeData[0].y);
+        console.log("strokeData", strokeData);
 
         strokeData.forEach((point) => {
+            if (point?.isStart) {
+                context.moveTo(point.x, point.y);
+            }
             context.lineTo(point.x, point.y);
         });
 
@@ -72,6 +76,18 @@ const FakeWhiteboard = ({ update3DWhiteboard, user_id }) => {
                     // Do nothing
                 } else {
                     drawStroke(data.data);
+                }
+            });
+            socket.on("clear-whiteboard", (data) => {
+                if (data?.self) {
+                    // Do nothing
+                } else {
+                    context?.clearRect(
+                        0,
+                        0,
+                        canvasRef?.current?.width,
+                        canvasRef?.current?.height
+                    );
                 }
             });
         }

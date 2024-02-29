@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import io from "socket.io-client";
 import { BACKEND_URL } from "../../helper/staticVars";
+import { TbWashDrycleanOff } from "react-icons/tb";
 
 const xOffset = 600;
 const yOffset = 100;
 
 function Whiteboard() {
-    const [color, setColor] = useState("#e95a5a");
+    const [color, setColor] = useState("#000000");
     const [lineWidth, setLineWidth] = useState("2");
     const [socket, setSocket] = useState(null);
     const [context, setContext] = useState(null);
@@ -27,14 +28,14 @@ function Whiteboard() {
             socket.on("mousePos", (data) => {
                 setReceivedMouseData(data);
             });
-            socket.on("lineData", (data) => {
-                if (data?.self) {
-                    // Do nothing
-                } else {
-                    setLineData(data.data);
-                    drawStroke(data.data);
-                }
-            });
+            // socket.on("lineData", (data) => {
+            //     if (data?.self) {
+            //         // Do nothing
+            //     } else {
+            //         setLineData(data.data);
+            //         drawStroke(data.data);
+            //     }
+            // });
         }
     }, [socket]);
 
@@ -43,18 +44,46 @@ function Whiteboard() {
         socket.emit("lineData", [...lineData, pos]);
     };
 
-    function drawStroke(strokeData) {
+    const onClearWhiteboardClick = () => {
+        setLineData([]);
+        context?.clearRect(
+            0,
+            0,
+            canvasRef?.current?.width,
+            canvasRef?.current?.height
+        );
+
+        // socket.emit("clear-whiteboard", true);
+    };
+
+    // function drawStroke(strokeData) {
+    //     context.beginPath();
+    //     context.moveTo(strokeData[0].x, strokeData[0].y);
+
+    //     strokeData.forEach((point) => {
+    //         context.lineTo(point.x, point.y);
+    //     });
+
+    //     context.strokeStyle = "#000000";
+    //     context.lineWidth = 2;
+    //     context.stroke();
+    // }
+
+    const onMouseDown = (e) => {
+        setIsMousePressed(true);
         context.beginPath();
-        context.moveTo(strokeData[0].x, strokeData[0].y);
+        context.moveTo(e.clientX - xOffset / 2, e.clientY - yOffset / 2);
 
-        strokeData.forEach((point) => {
-            context.lineTo(point.x, point.y);
+        updateLineData({
+            x: e.clientX - xOffset / 2,
+            y: e.clientY - yOffset / 2,
+            isStart: true,
         });
-
-        context.strokeStyle = "#fe0000";
-        context.lineWidth = 2;
-        context.stroke();
-    }
+    };
+    const onMouseUp = (e) => {
+        onMouseMove(e);
+        setIsMousePressed(false);
+    };
 
     const onMouseMove = (e) => {
         socket.emit("mousePos", {
@@ -67,13 +96,15 @@ function Whiteboard() {
             context.lineWidth = lineWidth;
             context.lineCap = "round";
             context.lineJoin = "round";
+            context.stroke();
 
             if (isMousePressed) {
-                context.stroke();
                 updateLineData({
                     x: e.clientX - xOffset / 2,
                     y: e.clientY - yOffset / 2,
+                    isStart: false,
                 });
+
                 context.lineTo(
                     e.clientX - xOffset / 2,
                     e.clientY - yOffset / 2
@@ -92,6 +123,9 @@ function Whiteboard() {
             setContext(canvasRef?.current?.getContext("2d"));
         }
     }, [canvasRef]);
+    useEffect(() => {
+        console.log("lineData", lineData);
+    }, [lineData]);
 
     return (
         <div className="">
@@ -154,6 +188,13 @@ function Whiteboard() {
                         name=""
                     />
                 </div>
+                <div
+                    onClick={() => onClearWhiteboardClick()}
+                    className="w-full grid place-items-center cursor-pointer"
+                >
+                    <TbWashDrycleanOff />
+                    <div className="absolute h-12 w-12 rounded-xl hover:bg-[#c1f0ff76]"></div>
+                </div>
             </div>
             {/* Left Toolba: End */}
 
@@ -162,16 +203,10 @@ function Whiteboard() {
                     className="cursor-none bg-white shadow rounded-3xl"
                     onMouseMove={onMouseMove}
                     onTouchMove={onMouseMove}
-                    onMouseDown={() => setIsMousePressed(true)}
-                    onMouseUp={(e) => {
-                        onMouseMove(e);
-                        setIsMousePressed(false);
-                    }}
-                    onTouchStart={() => setIsMousePressed(true)}
-                    onTouchEnd={(e) => {
-                        onMouseMove(e);
-                        setIsMousePressed(false);
-                    }}
+                    onMouseDown={onMouseDown}
+                    onMouseUp={onMouseUp}
+                    onTouchStart={onMouseDown}
+                    onTouchEnd={onMouseUp}
                     ref={canvasRef}
                 ></canvas>
             </div>

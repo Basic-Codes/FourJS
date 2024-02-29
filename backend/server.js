@@ -75,6 +75,10 @@ io.on("connection", (socket) => {
         sendAll(socket, "lineData", data);
     });
 
+    socket.on("clear-whiteboard", (data) => {
+        sendAll(socket, "clear-whiteboard", data);
+    });
+
     socket.on("disconnect", () => {
         sockets.delete(socket);
     });
