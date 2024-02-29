@@ -117,7 +117,7 @@ const SingleClass = () => {
                     </div>
                 </div>
 
-                <div className="mt-10 space-y-5">
+                {/* <div className="mt-10 space-y-5">
                     <div className="px-10 py-5 rounded-lg shadow-lg border">
                         <div className="font-semibold text-lg">Teacher 001</div>
                         <div className="text-red-500 text-lg">
@@ -139,7 +139,7 @@ const SingleClass = () => {
                         </div>
                         <div>Session Started 5 min ago</div>
                     </div>
-                </div>
+                </div> */}
             </Layout>
         </div>
     );
