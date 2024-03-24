@@ -1,0 +1,73 @@
+# @host = http://localhost:8080
+@host = http://192.168.0.103:8080
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjViM2VjNzkxZTQ0NGZkMzFkNTZhMWIyIiwiaWF0IjoxNzA2NjU3NTMwLCJleHAiOjE3MDY2OTM1MzB9.7LMlHj1EiTDlYJvE74ogelchkkN6F_eJHIsCOlC1ELo
+
+### ! /
+GET {{host}} HTTP/1.1
+
+
+### ! Get User
+GET {{host}}/api/login HTTP/1.1
+content-type: application/json
+x-auth-token: {{token}}
+
+
+### ! Login
+POST {{host}}/api/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "r@g.com",
+    "password": "sadd"
+}
+
+### ! Sign Up
+POST {{host}}/api/signup HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Mr. Mozdaher",
+    "email": "s1@g.com",
+    "password": "sadd",
+    "isTeacher": false
+}
+
+
+
+
+### ! Get Classroom
+GET {{host}}/api/classroom/get?code=KZDebw HTTP/1.1
+content-type: application/json
+x-auth-token: {{token}}
+
+### ! List Classrooms
+GET {{host}}/api/classroom/list HTTP/1.1
+content-type: application/json
+x-auth-token: {{token}}
+
+### ! Add Classroom
+POST {{host}}/api/classroom/add HTTP/1.1
+content-type: application/json
+x-auth-token: {{token}}
+
+{
+    "name": "Civil Engineering"
+}
+
+### ! Join Classroom
+POST {{host}}/api/classroom/join HTTP/1.1
+content-type: application/json
+x-auth-token: {{token}}
+
+{
+    "code": "KZDebw"
+}
+
+### ! Create VR Session
+POST {{host}}/api/classroom/create-session HTTP/1.1
+content-type: application/json
+x-auth-token: {{token}}
+
+{
+    "code": "KZDebw"
+}
